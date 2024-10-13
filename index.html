@@ -1,405 +1,454 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Debasish Tripathy's Portfolio</title>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-  <link rel="stylesheet" href="style.css">
-  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debasish Tripathy - AI/ML Engineer Portfolio</title>
 
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+    <!-- Font and Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0a0a1a;
+            color: #e0e0ff;
+            position: relative;
+            overflow-x: hidden;
+        }
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .gradient-text {
+            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+        }
+        header {
+            background: linear-gradient(135deg, #1a1a3a 0%, #3b00ff 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        header::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background-image: url('https://www.transparenttextures.com/patterns/circuit-board.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            animation: rotateBG 20s linear infinite;
+        }
+        @keyframes rotateBG {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        .glow {
+            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+        }
+        .neon-border {
+            border: 2px solid transparent;
+            border-image: linear-gradient(45deg, #00ffff, #ff00ff);
+            border-image-slice: 1;
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+        }
+        /* Responsive Navigation */
+        #menuToggle {
+            display: none;
+        }
+        #menuToggle:checked + ul {
+            display: flex;
+        }
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                margin: 10px 0;
+            }
+            #menuToggle {
+                display: block;
+            }
+        }
+    </style>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="background-color: black ;">
-    <a class="navbar-brand" href="index.html"><img src="https://avatars.githubusercontent.com/u/156603397?v=4" class="rounded-circle" width="50vh"height="50vh">Debasish Tripathy</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#about">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#experience">Experience</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#projects">Projects</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#education">Education</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#skills">Technical Skills</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#certifications">Certifications</a>
-        </li>
-        <li class="nav-item" >
-            <a class="nav-link" href="#Social">Social</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#contact">Contact</a>
-        </li>
-        
+    <!-- AI Matrix Background -->
+    <canvas id="matrix"></canvas>
 
-      </ul>
+    <!-- Header Section -->
+    <header class="py-20 text-center text-white">
+        <h1 class="text-5xl font-bold mb-4 gradient-text orbitron glow" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.5);">Debasish Tripathy</h1>
+        <p class="text-xl text-cyan-300 orbitron">AI/ML Engineer | Cybersecurity Specialist | Future Tech Innovator</p>
+    </header>
 
-  </nav>
-
-  <div class="jumbotron jumbotron-fluid bg-cover" id="about" style="background-image: url(https://img.freepik.com/free-photo/futuristic-business-scene-with-ultra-modern-ambiance_23-2151003765.jpg?t=st=1722191830~exp=1722195430~hmac=62b37c14acc3f76e953ad35cd0e66a7c2b058b758b6755e2e0b119c791cc7c54&w=1380);">
-    <div class="container text-center text-light">
-        
-        <img src="https://media.licdn.com/dms/image/D5603AQHt8b-aXgHB3Q/profile-displayphoto-shrink_400_400/0/1707405655694?e=1727913600&v=beta&t=L05lQJNcpbuOCWZTA4rS-zB7F6hv4JSrQ0u2FCaYLTA" class="rounded-circle" width="150" height="150" alt="Profile Picture">
-      <h1 class="display-4">Debasish Tripathy</h1>
-      <p class="lead">Computer Science Undergraduate - Cybersecurity</p>
-      <p class="lead">Mobile:+91 8897008513  </p>
-      <p class ="lead">Email:Debasishtripathy2021@gmail.com</p>
-      <p class ="lead">Bengaluru, India</p>
-      <p class ="lead">Hi! I'm Debasish, a tech enthusiast in Bengaluru. I'm a coding whiz with a Computer Science degree from Manipal Institute of Technology. I'm passionate about cybersecurity, machine learning, and always learning new things! Looking to use tech to solve problems and innovate. Open to projects, collaboration, and meeting fellow tech enthusiasts. Let's connect and build something great!</p>
-
-    </div>
-  </div>
-
-  <div class="container my-5" id="experience">
-    <h2 class="text-center mb-4" style="font-weight: bolder;">Experience</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">Business Analyst Internship</h5>
-            <p class="card-text">Internshala (05/2023 - 09/2023)</p>
-            <ul>
-              <li>Conducted comprehensive analysis of business requirements, resulting in refined user stories and improved project understanding.</li>
-              <li>Collaborated with cross-functional teams to gather and document business needs, ensuring alignment between stakeholders and development teams.</li>
-              <li>Implemented process improvements, optimizing project efficiency and reducing delivery time by 15%.</li>
-              <li>Maintained effective communication with stakeholders, providing regular updates on project progress and addressing any concerns or issues.</li>
+    <!-- Navigation -->
+    <nav class="bg-gray-900 p-4 sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto flex justify-between items-center">
+            <label for="menuToggle" class="cursor-pointer md:hidden block">
+                <i class="fas fa-bars text-2xl"></i>
+            </label>
+            <input type="checkbox" id="menuToggle" class="hidden">
+            <ul class="flex space-x-6 orbitron">
+                <li><a href="#about" class="hover:text-cyan-400 transition duration-300">About</a></li>
+                <li><a href="#skills" class="hover:text-cyan-400 transition duration-300">Skills</a></li>
+                <li><a href="#experience" class="hover:text-cyan-400 transition duration-300">Experience</a></li>
+                <li><a href="#projects" class="hover:text-cyan-400 transition duration-300">Projects</a></li>
+                <li><a href="#education" class="hover:text-cyan-400 transition duration-300">Education</a></li>
+                <!-- <li><a href="#cybersecurity" class="hover:text-cyan-400 transition duration-300">Cybersecurity</a></li> -->
+                <li><a href="#contact" class="hover:text-cyan-400 transition duration-300">Contact</a></li>
             </ul>
-          </div>
         </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">Python/ML Developer Internship</h5>
-            <p class="card-text">PSYLIQ (12/2023 - 01/2024)</p>
-            <ul>
-              <li>Collaborate with cross-functional teams to design, develop, and deploy machine learning models for various applications.</li>
-              <li>Utilize Python libraries and frameworks, such as TensorFlow and scikit-learn, to implement and optimize machine learning algorithms.</li>
-              <li>Conduct thorough testing and debugging of code to ensure the robustness and reliability of machine learning models.</li>
-              <li>Analyze and interpret data to extract meaningful insights, contributing to data-driven decision-making processes.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title">AI/ML Developer Internship</h5>
-            <p class="card-text">CodeClause (03/2023 - 04/2024)</p>
-            <ul>
-              <li>Collaborate with cross-functional teams to design, develop, and deploy machine learning models for various applications.</li>
-              <li>Utilize Python libraries and frameworks, such as TensorFlow and scikit-learn, to implement and optimize machine learning algorithms.</li>
-              <li>Conduct thorough testing and debugging of code to ensure the robustness and reliability of machine learning models.</li>
-              <li>Analyze and interpret data to extract meaningful insights, contributing to data-driven decision-making processes.</li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+    </nav>
 
-  <div class="container my-5" id="projects">
-    <h2 class="text-center mb-4" style="font-weight: bolder;">Projects</h2>
-    <div class="row">
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title"><a href="#">Dark Web Scrapper Using Machine Learning</a></h5>
-            <p class="card-text">Developed a robust and intelligent machine learning model capable of extracting and analyzing information from the vast and obscure dark web domain. Leveraging advanced web scraping techniques and cutting-edge Convolutional Neural Networks (CNN), the model can efficiently navigate and retrieve data based on specific criteria or filters. This powerful tool enables targeted information retrieval, providing invaluable insights into the shadowy corners of the internet.</p>
-            <p class="card-text"><small class="text-muted">Technologies Used: BeautifulSoup, Scrapy, Convolutional Neural Networks (CNN), Python, TensorFlow, Keras.</small></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title"><a href="https://github.com/DebasishTripathy13/CharacterAI">Character AI</a></h5>
-            <p class="card-text">Conceptualized and developed an innovative Flask application that harnesses the power of Google's state-of-the-art GenerativeAI and Natural Language Processing (NLP) technologies. This application serves as an interactive and engaging chatbot, capable of generating detailed and immersive character descriptions tailored to user inputs. Additionally, it facilitates captivating roleplay conversations, delivering a truly personalized and immersive experience for users to explore and interact with the AI-generated characters. The application utilizes MongoDB for storing tokenized user data.</p>
-            <p class="card-text"><small class="text-muted">Technologies Used: Flask, Google GenerativeAI, Natural Language Processing (NLTK, spaCy, Hugging Face Transformers), MongoDB.</small></p>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card mb-4">
-          <div class="card-body">
-            <h5 class="card-title"><a href="https://github.com/Debasish7ripathy/TarotCard">Tarot Card Website</a></h5>
-            <p class="card-text">Designed and implemented a comprehensive Tarot Card reader website using the highly versatile Django framework.
-                <p class="card-text">This cutting-edge platform empowers users to delve into the realm of fortune-telling by leveraging the Gemini API and advanced Convolutional Neural Networks (CNN) to analyze and interpret intricate Tarot card readings. The website provides users with insightful and personalized predictions, offering a unique and seamless experience in exploring the mystical world of Tarot. The application integrates with a MySQL database to store user questions, responses, and card spreads for potential reuse and analysis.</p>
-                <p class="card-text"><small class="text-muted">Technologies Used: Django, Gemini API, Convolutional Neural Networks (CNN), MySQL.</small></p>
-              </div>
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-12">
+        <!-- About Section -->
+        <section id="about" class="mb-20">
+            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">About Me</h2>
+            <p class="text-lg leading-relaxed">
+                I am an innovative AI/ML Engineer specializing in cutting-edge technologies that drive the future of artificial intelligence. My expertise spans deep learning, natural language processing, and computer vision, allowing me to develop advanced AI solutions that challenge the status quo. With a solid foundation in cybersecurity, I prioritize the creation of intelligent systems that are secure, ethical, and resilient against emerging threats. My commitment to integrating robust security measures into AI development ensures that the solutions I create are not only groundbreaking but also trustworthy and safe for users.
+            </p>
+        </section>
+
+        <!-- Skills Section -->
+        <section id="skills" class="mb-20">
+            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Technical Prowess</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- AI/ML Skills -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-brain mr-2"></i> AI & Machine Learning
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>Deep Learning (TensorFlow, PyTorch)</li>
+                        <li>Natural Language Processing</li>
+                        <li>Computer Vision (OpenCV,YOLO)</li>
+                        <li>Reinforcement Learning</li>
+                        <li>GANs & Transformers</li>
+                        <li>MLOps & AI Deployment</li>
+                    </ul>
+                </div>
+                <!-- Cybersecurity Skills -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-shield-alt mr-2"></i> Cybersecurity Expertise
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>AI-Powered Threat Detection</li>
+                        <li>Quantum-Resistant Cryptography</li>
+                        <li>Blockchain Security</li>
+                        <li>IoT Security</li>
+                        <li>Ethical Hacking & Pentesting</li>
+                        <li>Digital Forensics</li>
+                        <li>Privacy-Preserving AI</li>
+                        <li>Secure AI Model Development</li>
+                    </ul>
+                </div>
+                <!-- Emerging Tech Skills -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-rocket mr-2"></i> Devlopement Technologies
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>Python</li>
+                        <li>Java</li>
+                        <li>JavaScript</li>
+                        <li>Flask & FastAPI</li>
+                        <li>React & Node.js</li>
+                        <li>SQL & NoSQL Databases</li>
+                        <li>Cloud Computing (AWS, GCP)</li>
+                        <li>Containerization (Docker, Kubernetes)</li>
+                       
+                    </ul>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="container my-5" id="education">
-        <h2 class="text-center mb-4" style="font-weight: bolder;">Education</h2>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card mb-4">
-              <div class="card-body">
-                <h5 class="card-title">B.Tech Computer Science and Engineering</h5>
-                <p class="card-text">Manipal Institute Of Technology, Bengaluru, India (2026)</p>
-                <p class="card-text">Relevant Courses: Cybersecurity, Machine Learning, Web Development, Data Analysis, Programming Languages, System Design, Compiler Design, Algorithms, Data structure</p>
-              </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section id="experience" class="mb-20">
+            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Professional Journey</h2>
+            <div class="space-y-8">
+                <!-- Experience 1 -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-2xl font-semibold mb-2 orbitron">Machine Learning Engineer </h3>
+                    <p class="text-cyan-400 mb-4">GENIE AI, INC. | Remote | 04/2024 - Present</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Pioneered the company's AI Assistant, achieving 92% user satisfaction</li>
+                        <li>Developed FireSafety computer vision system with 87.62% accuracy for automated property inspections</li>
+                        <li>Implemented production-grade NLP chatbot using proprietary LLMs and RAG, reducing response time by 60%</li>
+                        <li>Enhanced Research Copilot through fine-tuning techniques, improving accuracy by 25%</li>
+                    </ul>
+                </div>
+                <!-- Experience 2 -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-2xl font-semibold mb-2 orbitron">Business Analyst Intern</h3>
+                    <p class="text-cyan-400 mb-4">Internshala | Remote | 05/2023 - 09/2023</p>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Analyzed business requirements and created refined user stories for development teams</li>
+                        <li>Conducted data analysis leading to 0.02% profit increase through strategic recommendations</li>
+                        <li>Implemented process improvements optimizing project delivery timelines by 15%</li>
+                    </ul>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
-    
-      <div class="container my-5" id="skills">
-        <h2 class="text-center mb-4 " style="font-weight: bolder;">Technical Skills</h2>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card mb-4">
-              <div class="card-body">
-                <ul>
-                  <li>Programming Languages: Python, Java, C++</li>
-                  <li>Data Analysis and Visualization: Pandas, NumPy, ggplot, Matplotlib, SQL, Oracle SQL, MongoDB</li>
-                  <li>Cybersecurity Tools: Nmap, Metasploit, Burp Suite</li>
-                  <li>Machine Learning: TensorFlow, Keras, scikit-learn, PyTorch, Transformers, Deep Learning</li>
-                  <li>Web Development+Cloud: HTML, CSS, JavaScript, React, Next, Google Console Programming, Azure</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="container my-5" id="Skillvisualization">
-        <h2 class="text-center mb-4" style="font-weight: bolder;">Visualization</h2>
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card mb-4">
-                    <div class="card-body">
-                        <div class="skill">
-                        <ul>
-                            
-                                <li>Python</LI>
-                                <div class="skill-bar" data-skill="95"></div>
-                                <li>Java</li>
-                                <div class="skill-bar" data-skill="80"></div>
-                                <li>C++</li>
-                                <div class="skill-bar" data-skill="85"></div>
-                                <li>TensorFlow</li>
-                                <div class="skill-bar" data-skill="78"></div>
-                                <li>Keras</li>
-                                <div class="skill-bar" data-skill="90"></div>
-                                <li>MongoDB</li>
-                                <div class="skill-bar" data-skill="80"></div>
-                                <li>React</li>
-                                <div class="skill-bar" data-skill="78"></div>
-                                <li>Pandas</li>
-                                <div class="skill-bar" data-skill="93"></div>
-                                <li>NumPy</li>
-                                <div class="skill-bar" data-skill="88"></div>
-                                <li>ggplot</li>
-                                <div class="skill-bar" data-skill="90"></div>
-                                <li>Matplotlib</li>
-                                <div class="skill-bar" data-skill="96"></div>
-                                <li>SQL</li>
-                                <div class="skill-bar" data-skill="84"></div>
-                                <li>Oracle SQL</li>
-                                <div class="skill-bar" data-skill="90"></div>
-                                <li>Nmap</li>
-                                <div class="skill-bar" data-skill="75"></div>
-                                <li>Metasploit</li>
-                                <div class="skill-bar" data-skill="97"></div>
-                                <li>Burp Suite</li>
-                                <div class="skill-bar" data-skill="66"></div>
-                                <li>scikit-learn</li>
-                                <div class="skill-bar" data-skill="78"></div>
-                                <li>PyTorch</li>
-                                <div class="skill-bar" data-skill="87"></div>
-                                <li>Transformers</li>
-                                <div class="skill-bar" data-skill="90"></div>
-                                <li>Deep Learning</li>
-                                <div class="skill-bar" data-skill="90"></div>
-                                <li>HTML</li>
-                                <div class="skill-bar" data-skill="84"></div>
-                                <li>CSS</li>
-                                <div class="skill-bar" data-skill="82"></div>
-                                <li>JavaScript</li>
-                                <div class="skill-bar" data-skill="89"></div>
-                                <li>Next</li>
-                                <div class="skill-bar" data-skill="65"></div>
-                                <li>Google Console Programming</li>
-                                <div class="skill-bar" data-skill="60"></div>
-                                <li>Azure</li>
-                                <div class="skill-bar" data-skill="60"></div>
+        </section>
 
-
-
-                              
-                        </ul>
-                    </div>
-
+        <!-- Projects Section (Kept as in the original) -->
+        <section id="projects" class="mb-20">
+            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Featured Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Project 1 -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
+                        <i class="fas fa-utensils mr-2"></i> AI Food Pantry (2024)
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Developed an AI-powered food analysis system using ResNet50 for ingredient detection, achieving 95% accuracy to minimize food waste.</li>
+                        <li>Implemented a RAG pipeline with LangChain, reducing nutritional query time by 40% and making healthy options more accessible.</li>
+                        <li>Created a recommendation system using collaborative filtering, achieving 93% relevance in helping users find sustainable food options.</li>
+                        <li>Focused on combating food insecurity by connecting users with local food resources and promoting sustainable practices.</li>
+                        <li class="text-sm text-gray-400">Tech Stack: Gemini, SQLite, LangChain, Pinecone, FastAPI, Redis</li>
+                    </ul>
                 </div>
 
+                <!-- Project 2 -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
+                        <i class="fas fa-unlock-alt mr-2"></i> CryptoCracker (2024)
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Developed a crypto analysis system using a BERT classifier to predict encryption algorithms of cipher texts, achieving 95% accuracy for enhanced data security.</li>
+                        <li>Reduced prediction query time by 70-80%, making the decryption process more efficient while minimizing resource consumption.</li>
+                        <li>Regularly updated ML algorithms to ensure relevance and accuracy, employing a fallback mechanism for continuous improvement.</li>
+                        <li>Committed to ethical practices in data handling and cryptography, ensuring the responsible use of technology in the fight against cyber threats.</li>
+                        <li class="text-sm text-gray-400">Tech Stack: BERT, SQLite, LangChain, Pinecone, FastAPI, Redis, Crypto, Security Protocols, Geth, EtherScan, Truffle Suite,sChainalysis, CipherTrace</li>
+                    </ul>
                 </div>
 
-            </div>
+                                <!-- Project 3 -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
+                        <i class="fas fa-user-astronaut mr-2"></i> Character AI with Voice Interaction (2024)
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Developed a Flask application utilizing Google’s Generative AI and advanced NLP technologies for interactive character-based conversations.</li>
+                        <li>Integrated voice recognition and synthesis capabilities, enabling users to engage in dynamic, voice-activated dialogues with AI characters.</li>
+                        <li>Implemented context-aware conversation flows to enhance user experience, allowing characters to maintain coherent discussions over multiple interactions.</li>
+                        <li>Employed a feedback loop mechanism that continuously improves character responses based on user interactions, enhancing engagement and satisfaction.</li>
+                        <li class="text-sm text-gray-400">Tech Stack: Flask, Google Generative AI, AzureML, NLP (NLTK, spaCy, Hugging Face Transformers), MongoDB, Web Speech API</li>
+                    </ul>
+                </div>
+
+                <!-- Project 4 -->
+                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
+                        <i class="fas fa-clover mr-2"></i> Tarot Card Predictor (2023)
+                    </h3>
+                    <ul class="list-disc list-inside space-y-2">
+                        <li>Created an engaging online platform that offers personalized tarot readings, guiding users through life’s journeys with voice interaction capabilities.</li>
+                        <li>Implemented voice recognition for users to ask questions and receive personalized readings, making the experience more immersive and accessible.</li>
+                        <li>Designed an intuitive interface where users can explore card meanings, receive insightful interpretations, and gain clarity on their past, present, and future.</li>
+                        <li>Integrated machine learning algorithms to analyze user input and tailor readings based on preferences and previous interactions.</li>
+                        <li class="text-sm text-gray-400">Tech Stack: Flask, Gemini, Tailwind CSS, Bootstrap, JavaScript, OpenCV, MongoDB, AWS, Web Speech API</li>
+                    </ul>
+                </div>
+
+        </section>
+
+<!-- Education Section -->
+<section id="education" class="mb-20">
+    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Education</h2>
+    <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+        <h3 class="text-2xl font-semibold mb-2 orbitron">B.Tech in Computer Science and Engineering</h3>
+        <p class="text-cyan-400 mb-4">Manipal Institute of Technology | 2022 - 2026</p>
+        <p class="mb-2">CGPA: 7.57</p>
+        <p class="text-sm">Relevant Coursework: Advanced AI Algorithms, Quantum Computing, Cybersecurity in AI Systems, Neural Network Architectures, Ethical AI and Machine Learning, Blockchain Technology, IoT and Edge Computing</p>
+    </div>
+</section>
+
+<!-- Cybersecurity Section -->
+<!-- <section id="cybersecurity" class="mb-20">
+    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Cybersecurity Focus</h2>
+    <p class="text-lg leading-relaxed mb-6">As a Certified Cybersecurity Technician, I integrate AI-driven solutions to enhance security measures and combat modern cyber threats in the age of quantum computing and IoT.</p>
+    <ul class="list-disc list-inside text-lg space-y-2">
+        <li>Developed AI-powered intrusion detection systems with 99.9% accuracy</li>
+        <li>Implemented quantum-resistant encryption algorithms for securing AI model communications</li>
+        <li>Created an AI-driven threat intelligence platform, reducing incident response time by 70%</li>
+        <li>Designed secure federated learning systems for privacy-preserving AI model training</li>
+    </ul>
+</section> -->
+
+<!-- Achievements Section -->
+<section id="achievements" class="mb-20">
+    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Achievements & Activities</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Competitions -->
+        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                <i class="fas fa-trophy mr-2"></i> Competitions
+            </h3>
+            <ul class="list-disc list-inside">
+                <li>Winner of AutoDesk EduHack</li>
+                <li>Winner of Microsoft AI Odyssey India</li>
+                <li>4th position in Walmart Global ML Hackathon</li>
+                <li>Finalist in the International Quantum AI Challenge</li>
+            </ul>
         </div>
-
-      </div>
-    
-      <div class="container my-5" id="certifications">
-        <h2 class="text-center mb-4" style="font-weight: bolder;">Certifications</h2>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card mb-4">
-              <div class="card-body">
-                <ul>
-                  <li>Introduction to Object-Oriented Programming with Java</li>
-                  <li>Object-Oriented Hierarchies in Java</li>
-                  <li>Foundations of Cybersecurity</li>
-                  <li>Introduction to Google Workspace Administration</li>
-                  <li>Machine Learning Engineering for Production (MLOps) Specialization</li>
-                  <li>Google CyberSecurity Professional</li>
-                </ul>
-              </div>
-            </div>
-          </div>
+        <!-- Leadership -->
+        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                <i class="fas fa-user-cog mr-2"></i> Leadership
+            </h3>
+            <ul class="list-disc list-inside">
+                <li>President of AI for Sustainable Development Club MITBLR</li>
+                <li>Vice Chair of Quantum Computing Research Group MITBLR</li>
+                <li>Tech Lead for AI Security Task Force at Techfest MITBLR</li>
+                <li>Discipline Lead for AI Ethics Panel at Open House MAHE</li>
+            </ul>
         </div>
-      </div>
-      <div class="container my-5" id="Social">
-        <h2 class="text-center mb-4" style="font-weight: bolder;">Social</h2>
-        <div class="row">
-          <div class="col-md-12">
-            <div class="card mb-4">
-              <div class="card-body">
-                <ul>
-                  <li><a href="https://www.linkedin.com/in/debasish-tripathy-48441b1b5/" style="color: black;" target="_blank">Linkedin</a></li>
-                  <li><a href="https://github.com/DebasishTripathy13" style="color: black;" target="_blank">Github Professional</a></li>
-                  <li><a href="https://github.com/Debasish7ripathy" style="color: black;" target="_blank">Github Projects</a></li>
-                  <li><a href="https://www.instagram.com/debasish_302/ " style="color: black;" target="_blank">Instagram</a></li>
-                  <li><a href="https://www.x.com/debasish_1302" style="color: black;" target="_blank">Twitter</a></li>
-                  <li><a href="https://motioncraft.notion.site/" style="color: black;" target="_blank">Notion</a></li>
-
-                </ul>
-              </div>
-            </div>
-          </div>
+        <!-- Publications -->
+        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                <i class="fas fa-book-open mr-2"></i> Publications
+            </h3>
+            <ul class="list-disc list-inside">
+                <li>Harnessing Machine Learning for the Detection of Paranormal Phenomena: Methodologies and Insights</li>
+                <li>Energy-Efficient ML in GIS Satellite Imaging Systems</li>
+                <li>Comparative Analysis of Different Models for Detecting Harmful Brain Activity</li>
+            </ul>
         </div>
-      </div>
-    
-    
-      <div class="container my-5" id="contact">
-        <h2 class="text-center mb-4" style="font-weight: bolder;">Get in Touch</h2>
-        <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
-
-          <div class="form-group">
-            <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
-
-          </div>
-          <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
-
-          </div>
-          <div class="form-group">
-            <label for="message">Message:</label>
-            <textarea class="form-control" id="message" name="message" rows="5" placeholder="Message" required></textarea>
-
-          </div>
-          <input type="hidden" name="access_key" value="72191338-d703-4ad7-9997-a4c082c9a58e"/>
-
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </form>
-      </div>
-    
-      <footer class="text-center bg-body-tertiary" style="margin-top: 20vh;">
-        <!-- Grid container -->
-        <div class="container pt-4">
-          <!-- Section: Social media -->
-          <section class="mb-4">
-            <!-- Facebook -->
-            <a
-              data-mdb-ripple-init
-              class="btn btn-link btn-floating btn-lg text-body m-1"
-              href="#!"
-              role="button"
-              data-mdb-ripple-color="dark"
-              ><i class="fab fa-facebook-f"></i
-            ></a>
-      
-            <!-- Twitter -->
-            <a
-              data-mdb-ripple-init
-              class="btn btn-link btn-floating btn-lg text-body m-1"
-              href="https://twitter.com/debasish_1302"
-              role="button"
-              data-mdb-ripple-color="dark"
-              ><i class="fab fa-twitter"></i
-            ></a>
-      
-            <!-- Google -->
-            <a
-              data-mdb-ripple-init
-              class="btn btn-link btn-floating btn-lg text-body m-1"
-              href="google.com"
-              role="button"
-              data-mdb-ripple-color="dark"
-              ><i class="fab fa-google"></i
-            ></a>
-      
-            <!-- Instagram -->
-            <a
-              data-mdb-ripple-init
-              class="btn btn-link btn-floating btn-lg text-body m-1"
-              href="https://www.instagram.com/debasish_302"
-              role="button"
-              data-mdb-ripple-color="dark"
-              ><i class="fab fa-instagram"></i
-            ></a>
-      
-            <!-- Linkedin -->
-            <a
-              data-mdb-ripple-init
-              class="btn btn-link btn-floating btn-lg text-body m-1"
-              href="https://www.linkedin.com/in/debasish-tripathy-48441b1b5/"
-              role="button"
-              data-mdb-ripple-color="dark"
-              ><i class="fab fa-linkedin"></i
-            ></a>
-            <!-- Github -->
-            <a
-              data-mdb-ripple-init
-              class="btn btn-link btn-floating btn-lg text-body m-1"
-              href="https://github.com/debasishTripathy13/"
-              role="button"
-              data-mdb-ripple-color="dark"
-              ><i class="fab fa-github"></i
-            ></a>
-          </section>
-          <!-- Section: Social media -->
+        <!-- Patents -->
+        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                <i class="fas fa-lightbulb mr-2"></i> Patents
+            </h3>
+            <ul class="list-disc list-inside">
+                <li>AI-Powered Fashion Style Transfer System (Silku)</li>
+                <li>Multimodal Sentiment Analysis Using Biometric Parameters (DESEN)</li>
+                <li>Quantum-Enhanced Paranormal Activity Detection System (QPARDEC)</li>
+                <li>Advanced Cipher Decryption tool (CipherSlayer)</li>
+            </ul>
         </div>
-        <!-- Grid container -->
-      
-        <!-- Copyright -->
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.05);">
-          © 2024 :
-          <a class="text-body" href="index.html">DebasishTripathy13</a>
-        </div>
-        <!-- Copyright -->
-      </footer>
+    </div>
+</section>
 
-      <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+<!-- Contact Section -->
+<section id="contact" class="mb-20">
+    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Get in Touch</h2>
+    <p class="text-lg mb-6">Feel free to reach out to me through any of the platforms below:</p>
+    <div class="flex space-x-4">
+        <a href="mailto:your.email@example.com" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+            <i class="fas fa-envelope mr-2"></i> Email
+        </a>
+        <a href="https://linkedin.com/in/debasish-tripathy-48441b1b5" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+            <i class="fab fa-linkedin mr-2"></i> LinkedIn
+        </a>
+        <a href="https://github.com/DebasishTripathy13" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+            <i class="fab fa-github mr-2"></i> GitHub
+        </a>
+        <a href="https://debasish7ripathy.github.io/Portfolio/" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+            <i class="fas fa-globe mr-2"></i> Portfolio
+        </a>
+    </div>
+</section>
+</main>
 
-      <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-      <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-      <script src="script.js"></script>
-    </body>
-    </html>
+<!-- Footer -->
+<footer class="bg-gray-900 text-center py-8">
+<p class="text-cyan-400">&copy; 2024 Debasish Tripathy. Pioneering the Future of AI and Cybersecurity.</p>
+</footer>
+
+<!-- Scripts -->
+<script>
+// AI Matrix effect on the background (kept as in the original)
+const canvas = document.getElementById('matrix');
+const ctx = canvas.getContext('2d');
+let width = canvas.width = window.innerWidth;
+let height = canvas.height = window.innerHeight;
+
+const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
+const fontSize = 16;
+const columns = Math.floor(width / fontSize);
+const drops = new Array(columns).fill(1);
+
+function drawMatrix() {
+    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+    ctx.fillRect(0, 0, width, height);
+    ctx.fillStyle = '#0ff';
+    ctx.font = fontSize + 'px monospace';
+
+    for (let i = 0; i < drops.length; i++) {
+        const text = letters.charAt(Math.floor(Math.random() * letters.length));
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+        if (drops[i] * fontSize > height && Math.random() > 0.975) {
+            drops[i] = 0;
+        }
+        drops[i]++;
+    }
+}
+setInterval(drawMatrix, 35);
+
+// Handle window resize
+window.addEventListener('resize', () => {
+    width = canvas.width = window.innerWidth;
+    height = canvas.height = window.innerHeight;
+});
+
+// GSAP Animations
+gsap.registerPlugin(ScrollTrigger);
+
+gsap.utils.toArray('section').forEach(section => {
+    gsap.from(section, {
+        opacity: 0,
+        y: 50,
+        duration: 1,
+        scrollTrigger: {
+            trigger: section,
+            start: 'top 80%',
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse'
+        }
+    });
+});
+
+// Typewriter effect for the subtitle
+const subtitle = document.querySelector('header p');
+const text = subtitle.textContent;
+subtitle.textContent = '';
+let i = 0;
+function typeWriter() {
+    if (i < text.length) {
+        subtitle.textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 50);
+    }
+}
+typeWriter();
+</script>
+</body>
+</html>

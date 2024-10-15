@@ -41,6 +41,10 @@
             background: linear-gradient(135deg, #1a1a3a 0%, #3b00ff 100%);
             position: relative;
             overflow: hidden;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         header::before {
             content: '';
@@ -94,6 +98,22 @@
                 display: block;
             }
         }
+        .section-heading {
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .card {
+            background: rgba(26, 26, 58, 0.8);
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+        }
     </style>
 </head>
 <body>
@@ -101,9 +121,12 @@
     <canvas id="matrix"></canvas>
 
     <!-- Header Section -->
-    <header class="py-20 text-center text-white">
-        <h1 class="text-5xl font-bold mb-4 gradient-text orbitron glow" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.5);">Debasish Tripathy</h1>
-        <p class="text-xl text-cyan-300 orbitron">AI/ML Engineer | Cybersecurity Specialist | Future Tech Innovator</p>
+    <header class="text-center text-white">
+        <div class="z-10 relative">
+            <h1 class="text-6xl font-bold mb-4 gradient-text orbitron glow" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.5);">Debasish Tripathy</h1>
+            <p class="text-2xl text-cyan-300 orbitron mb-8">AI/ML Engineer | Cybersecurity Specialist | Future Tech Innovator</p>
+            <a href="#about" class="bg-cyan-500 text-white px-6 py-3 rounded-full hover:bg-cyan-600 transition duration-300 orbitron">Explore My Work</a>
+        </div>
     </header>
 
     <!-- Navigation -->
@@ -119,7 +142,7 @@
                 <li><a href="#experience" class="hover:text-cyan-400 transition duration-300">Experience</a></li>
                 <li><a href="#projects" class="hover:text-cyan-400 transition duration-300">Projects</a></li>
                 <li><a href="#education" class="hover:text-cyan-400 transition duration-300">Education</a></li>
-                <!-- <li><a href="#cybersecurity" class="hover:text-cyan-400 transition duration-300">Cybersecurity</a></li> -->
+                <li><a href="#achievements" class="hover:text-cyan-400 transition duration-300">Achievements</a></li>
                 <li><a href="#contact" class="hover:text-cyan-400 transition duration-300">Contact</a></li>
             </ul>
         </div>
@@ -129,32 +152,34 @@
     <main class="container mx-auto px-4 py-12">
         <!-- About Section -->
         <section id="about" class="mb-20">
-            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">About Me</h2>
-            <p class="text-lg leading-relaxed">
-                I am an innovative AI/ML Engineer specializing in cutting-edge technologies that drive the future of artificial intelligence. My expertise spans deep learning, natural language processing, and computer vision, allowing me to develop advanced AI solutions that challenge the status quo. With a solid foundation in cybersecurity, I prioritize the creation of intelligent systems that are secure, ethical, and resilient against emerging threats. My commitment to integrating robust security measures into AI development ensures that the solutions I create are not only groundbreaking but also trustworthy and safe for users.
-            </p>
+            <h2 class="section-heading gradient-text orbitron">About Me</h2>
+            <div class="card">
+                <p class="text-lg leading-relaxed">
+                    I am an innovative AI/ML Engineer specializing in cutting-edge technologies that drive the future of artificial intelligence. My expertise spans deep learning, natural language processing, and computer vision, allowing me to develop advanced AI solutions that challenge the status quo. With a solid foundation in cybersecurity, I prioritize the creation of intelligent systems that are secure, ethical, and resilient against emerging threats. My commitment to integrating robust security measures into AI development ensures that the solutions I create are not only groundbreaking but also trustworthy and safe for users.
+                </p>
+            </div>
         </section>
 
         <!-- Skills Section -->
         <section id="skills" class="mb-20">
-            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Technical Prowess</h2>
+            <h2 class="section-heading gradient-text orbitron">Technical Prowess</h2>
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- AI/ML Skills -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
                         <i class="fas fa-brain mr-2"></i> AI & Machine Learning
                     </h3>
                     <ul class="list-disc list-inside">
                         <li>Deep Learning (TensorFlow, PyTorch)</li>
                         <li>Natural Language Processing</li>
-                        <li>Computer Vision (OpenCV,YOLO)</li>
+                        <li>Computer Vision (OpenCV, YOLO)</li>
                         <li>Reinforcement Learning</li>
                         <li>GANs & Transformers</li>
                         <li>MLOps & AI Deployment</li>
                     </ul>
                 </div>
                 <!-- Cybersecurity Skills -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
                         <i class="fas fa-shield-alt mr-2"></i> Cybersecurity Expertise
                     </h3>
@@ -169,10 +194,10 @@
                         <li>Secure AI Model Development</li>
                     </ul>
                 </div>
-                <!-- Emerging Tech Skills -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <!-- Development Technologies -->
+                <div class="card card-hover neon-border">
                     <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-rocket mr-2"></i> Devlopement Technologies
+                        <i class="fas fa-code mr-2"></i> Development Technologies
                     </h3>
                     <ul class="list-disc list-inside">
                         <li>Python</li>
@@ -183,7 +208,6 @@
                         <li>SQL & NoSQL Databases</li>
                         <li>Cloud Computing (AWS, GCP)</li>
                         <li>Containerization (Docker, Kubernetes)</li>
-                       
                     </ul>
                 </div>
             </div>
@@ -191,10 +215,10 @@
 
         <!-- Experience Section -->
         <section id="experience" class="mb-20">
-            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Professional Journey</h2>
+            <h2 class="section-heading gradient-text orbitron">Professional Journey</h2>
             <div class="space-y-8">
                 <!-- Experience 1 -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-2xl font-semibold mb-2 orbitron">Machine Learning Engineer </h3>
                     <p class="text-cyan-400 mb-4">GENIE AI, INC. | Remote | 04/2024 - Present</p>
                     <ul class="list-disc list-inside space-y-2">
@@ -205,7 +229,7 @@
                     </ul>
                 </div>
                 <!-- Experience 2 -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-2xl font-semibold mb-2 orbitron">Business Analyst Intern</h3>
                     <p class="text-cyan-400 mb-4">Internshala | Remote | 05/2023 - 09/2023</p>
                     <ul class="list-disc list-inside space-y-2">
@@ -217,12 +241,12 @@
             </div>
         </section>
 
-        <!-- Projects Section (Kept as in the original) -->
+        <!-- Projects Section -->
         <section id="projects" class="mb-20">
-            <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Featured Projects</h2>
+            <h2 class="section-heading gradient-text orbitron">Featured Projects</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
                         <i class="fas fa-utensils mr-2"></i> AI Food Pantry (2024)
                     </h3>
@@ -236,7 +260,7 @@
                 </div>
 
                 <!-- Project 2 -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
                         <i class="fas fa-unlock-alt mr-2"></i> CryptoCracker (2024)
                     </h3>
@@ -245,17 +269,17 @@
                         <li>Reduced prediction query time by 70-80%, making the decryption process more efficient while minimizing resource consumption.</li>
                         <li>Regularly updated ML algorithms to ensure relevance and accuracy, employing a fallback mechanism for continuous improvement.</li>
                         <li>Committed to ethical practices in data handling and cryptography, ensuring the responsible use of technology in the fight against cyber threats.</li>
-                        <li class="text-sm text-gray-400">Tech Stack: BERT, SQLite, LangChain, Pinecone, FastAPI, Redis, Crypto, Security Protocols, Geth, EtherScan, Truffle Suite,sChainalysis, CipherTrace</li>
+                        <li class="text-sm text-gray-400">Tech Stack: BERT, SQLite, LangChain, Pinecone, FastAPI, Redis, Crypto, Security Protocols, Geth, EtherScan, Truffle Suite, Chainalysis, CipherTrace</li>
                     </ul>
                 </div>
 
-                                <!-- Project 3 -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <!-- Project 3 -->
+                <div class="card card-hover neon-border">
                     <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
                         <i class="fas fa-user-astronaut mr-2"></i> Character AI with Voice Interaction (2024)
                     </h3>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>Developed a Flask application utilizing Google’s Generative AI and advanced NLP technologies for interactive character-based conversations.</li>
+                        <li>Developed a Flask application utilizing Google's Generative AI and advanced NLP technologies for interactive character-based conversations.</li>
                         <li>Integrated voice recognition and synthesis capabilities, enabling users to engage in dynamic, voice-activated dialogues with AI characters.</li>
                         <li>Implemented context-aware conversation flows to enhance user experience, allowing characters to maintain coherent discussions over multiple interactions.</li>
                         <li>Employed a feedback loop mechanism that continuously improves character responses based on user interactions, enhancing engagement and satisfaction.</li>
@@ -264,197 +288,187 @@
                 </div>
 
                 <!-- Project 4 -->
-                <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
+                <div class="card card-hover neon-border">
                     <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
                         <i class="fas fa-clover mr-2"></i> Tarot Card Predictor (2023)
                     </h3>
                     <ul class="list-disc list-inside space-y-2">
-                        <li>Created an engaging online platform that offers personalized tarot readings, guiding users through life’s journeys with voice interaction capabilities.</li>
+                        <li>Created an engaging online platform that offers personalized tarot readings, guiding users through life's journeys with voice interaction capabilities.</li>
                         <li>Implemented voice recognition for users to ask questions and receive personalized readings, making the experience more immersive and accessible.</li>
                         <li>Designed an intuitive interface where users can explore card meanings, receive insightful interpretations, and gain clarity on their past, present, and future.</li>
                         <li>Integrated machine learning algorithms to analyze user input and tailor readings based on preferences and previous interactions.</li>
                         <li class="text-sm text-gray-400">Tech Stack: Flask, Gemini, Tailwind CSS, Bootstrap, JavaScript, OpenCV, MongoDB, AWS, Web Speech API</li>
                     </ul>
                 </div>
-
+            </div>
         </section>
 
-<!-- Education Section -->
-<section id="education" class="mb-20">
-    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Education</h2>
-    <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
-        <h3 class="text-2xl font-semibold mb-2 orbitron">B.Tech in Computer Science and Engineering</h3>
-        <p class="text-cyan-400 mb-4">Manipal Institute of Technology | 2022 - 2026</p>
-        <p class="mb-2">CGPA: 7.57</p>
-        <p class="text-sm">Relevant Coursework: Advanced AI Algorithms, Quantum Computing, Cybersecurity in AI Systems, Neural Network Architectures, Ethical AI and Machine Learning, Blockchain Technology, IoT and Edge Computing</p>
-    </div>
-</section>
+        <!-- Education Section -->
+        <section id="education" class="mb-20">
+            <h2 class="section-heading gradient-text orbitron">Education</h2>
+            <div class="card card-hover neon-border">
+                <h3 class="text-2xl font-semibold mb-2 orbitron">B.Tech in Computer Science and Engineering</h3>
+                <p class="text-cyan-400 mb-4">Manipal Institute of Technology | 2022 - 2026</p>
+                <p class="mb-2">CGPA: 7.57</p>
+                <p class="text-sm">Relevant Coursework: Advanced AI Algorithms, Quantum Computing, Cybersecurity in AI Systems, Neural Network Architectures, Ethical AI and Machine Learning, Blockchain Technology, IoT and Edge Computing</p>
+            </div>
+        </section>
 
-<!-- Cybersecurity Section -->
-<!-- <section id="cybersecurity" class="mb-20">
-    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Cybersecurity Focus</h2>
-    <p class="text-lg leading-relaxed mb-6">As a Certified Cybersecurity Technician, I integrate AI-driven solutions to enhance security measures and combat modern cyber threats in the age of quantum computing and IoT.</p>
-    <ul class="list-disc list-inside text-lg space-y-2">
-        <li>Developed AI-powered intrusion detection systems with 99.9% accuracy</li>
-        <li>Implemented quantum-resistant encryption algorithms for securing AI model communications</li>
-        <li>Created an AI-driven threat intelligence platform, reducing incident response time by 70%</li>
-        <li>Designed secure federated learning systems for privacy-preserving AI model training</li>
-    </ul>
-</section> -->
+        <!-- Achievements Section -->
+        <section id="achievements" class="mb-20">
+            <h2 class="section-heading gradient-text orbitron">Achievements & Activities</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <!-- Competitions -->
+                <div class="card card-hover neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-trophy mr-2"></i> Competitions
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>Winner of AutoDesk EduHack</li>
+                        <li>Winner of Microsoft AI Odyssey India</li>
+                        <li>4th position in Walmart Global ML Hackathon</li>
+                        <li>Finalist in the International Quantum AI Challenge</li>
+                    </ul>
+                </div>
+                <!-- Leadership -->
+                <div class="card card-hover neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-user-cog mr-2"></i> Leadership
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>President of AI for Sustainable Development Club MITBLR</li>
+                        <li>Vice Chair of Quantum Computing Research Group MITBLR</li>
+                        <li>Tech Lead for AI Security Task Force at Techfest MITBLR</li>
+                        <li>Discipline Lead for AI Ethics Panel at Open House MAHE</li>
+                    </ul>
+                </div>
+                <!-- Publications -->
+                <div class="card card-hover neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-book-open mr-2"></i> Publications
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>Harnessing Machine Learning for the Detection of Paranormal Phenomena: Methodologies and Insights</li>
+                        <li>Energy-Efficient ML in GIS Satellite Imaging Systems</li>
+                        <li>Comparative Analysis of Different Models for Detecting Harmful Brain Activity</li>
+                    </ul>
+                </div>
+                <!-- Patents -->
+                <div class="card card-hover neon-border">
+                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-lightbulb mr-2"></i> Patents
+                    </h3>
+                    <ul class="list-disc list-inside">
+                        <li>AI-Powered Fashion Style Transfer System (Silku)</li>
+                        <li>Multimodal Sentiment Analysis Using Biometric Parameters (DESEN)</li>
+                        <li>Quantum-Enhanced Paranormal Activity Detection System (QPARDEC)</li>
+                        <li>Advanced Cipher Decryption tool (CipherSlayer)</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
 
-<!-- Achievements Section -->
-<section id="achievements" class="mb-20">
-    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Achievements & Activities</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Competitions -->
-        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
-            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                <i class="fas fa-trophy mr-2"></i> Competitions
-            </h3>
-            <ul class="list-disc list-inside">
-                <li>Winner of AutoDesk EduHack</li>
-                <li>Winner of Microsoft AI Odyssey India</li>
-                <li>4th position in Walmart Global ML Hackathon</li>
-                <li>Finalist in the International Quantum AI Challenge</li>
-            </ul>
-        </div>
-        <!-- Leadership -->
-        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
-            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                <i class="fas fa-user-cog mr-2"></i> Leadership
-            </h3>
-            <ul class="list-disc list-inside">
-                <li>President of AI for Sustainable Development Club MITBLR</li>
-                <li>Vice Chair of Quantum Computing Research Group MITBLR</li>
-                <li>Tech Lead for AI Security Task Force at Techfest MITBLR</li>
-                <li>Discipline Lead for AI Ethics Panel at Open House MAHE</li>
-            </ul>
-        </div>
-        <!-- Publications -->
-        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
-            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                <i class="fas fa-book-open mr-2"></i> Publications
-            </h3>
-            <ul class="list-disc list-inside">
-                <li>Harnessing Machine Learning for the Detection of Paranormal Phenomena: Methodologies and Insights</li>
-                <li>Energy-Efficient ML in GIS Satellite Imaging Systems</li>
-                <li>Comparative Analysis of Different Models for Detecting Harmful Brain Activity</li>
-            </ul>
-        </div>
-        <!-- Patents -->
-        <div class="bg-gray-800 rounded-lg p-6 card-hover transition duration-300 neon-border">
-            <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                <i class="fas fa-lightbulb mr-2"></i> Patents
-            </h3>
-            <ul class="list-disc list-inside">
-                <li>AI-Powered Fashion Style Transfer System (Silku)</li>
-                <li>Multimodal Sentiment Analysis Using Biometric Parameters (DESEN)</li>
-                <li>Quantum-Enhanced Paranormal Activity Detection System (QPARDEC)</li>
-                <li>Advanced Cipher Decryption tool (CipherSlayer)</li>
-            </ul>
-        </div>
-    </div>
-</section>
+        <!-- Contact Section -->
+        <section id="contact" class="mb-20">
+            <h2 class="section-heading gradient-text orbitron">Get in Touch</h2>
+            <div class="card card-hover neon-border">
+                <p class="text-lg mb-6">Feel free to reach out to me through any of the platforms below:</p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="mailto:debasishtripathy2021@gmail.com" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+                        <i class="fas fa-envelope mr-2"></i> Email
+                    </a>
+                    <a href="https://linkedin.com/in/debasish-tripathy-48441b1b5" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+                        <i class="fab fa-linkedin mr-2"></i> LinkedIn
+                    </a>
+                    <a href="https://github.com/DebasishTripathy13" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+                        <i class="fab fa-github mr-2"></i> GitHub
+                    </a>
+                    <a href="https://github.com/Debasish7ripathy" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+                        <i class="fab fa-github mr-2"></i> GitHub2
+                    </a>
+                    <a href="https://debasish7ripathy.github.io/Portfolio/" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
+                        <i class="fas fa-globe mr-2"></i> Portfolio
+                    </a>
+                    <a href="https://drive.google.com/file/d/1B8h-VRDY7DcgVf6iQ0_m42-pphHgKIE7/view?usp=sharing" download class="text-cyan-400 hover:text-cyan-300 flex items-center">
+                        <i class="fas fa-file-download mr-2"></i> Download Resume
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
 
-<!-- Contact Section -->
-<section id="contact" class="mb-20">
-    <h2 class="text-3xl font-bold mb-6 gradient-text orbitron">Get in Touch</h2>
-    <p class="text-lg mb-6">Feel free to reach out to me through any of the platforms below:</p>
-    <div class="flex space-x-4">
-        <a href="mailto:debasishtripathy2021@gmail.com" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-            <i class="fas fa-envelope mr-2"></i> Email
-        </a>
-        <a href="https://linkedin.com/in/debasish-tripathy-48441b1b5" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-            <i class="fab fa-linkedin mr-2"></i> LinkedIn
-        </a>
-        <a href="https://github.com/DebasishTripathy13" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub
-        </a>
-        <a href="https://github.com/Debasish7ripathy" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-            <i class="fab fa-github mr-2"></i> GitHub2
-        </a>
-        <a href="https://debasish7ripathy.github.io/Portfolio/" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-            <i class="fas fa-globe mr-2"></i> Portfolio
-        </a>
-        <a href="https://drive.google.com/file/d/1B8h-VRDY7DcgVf6iQ0_m42-pphHgKIE7/view?usp=sharing" download class="text-cyan-400 hover:text-cyan-300 flex items-center">
-            <i class="fas fa-file-download mr-2"></i> Download Resume
-        </a>
-    </div>
-</section>
-</main>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-center py-8">
+        <p class="text-cyan-400">&copy; 2024 Debasish Tripathy. Pioneering the Future of AI and Cybersecurity.</p>
+    </footer>
 
-<!-- Footer -->
-<footer class="bg-gray-900 text-center py-8">
-<p class="text-cyan-400">&copy; 2024 Debasish Tripathy. Pioneering the Future of AI and Cybersecurity.</p>
-</footer>
+    <!-- Scripts -->
+    <script>
+        // AI Matrix effect on the background
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
 
-<!-- Scripts -->
-<script>
-// AI Matrix effect on the background (kept as in the original)
-const canvas = document.getElementById('matrix');
-const ctx = canvas.getContext('2d');
-let width = canvas.width = window.innerWidth;
-let height = canvas.height = window.innerHeight;
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
+        const fontSize = 16;
+        const columns = Math.floor(width / fontSize);
+        const drops = new Array(columns).fill(1);
 
-const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
-const fontSize = 16;
-const columns = Math.floor(width / fontSize);
-const drops = new Array(columns).fill(1);
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, width, height);
+            ctx.fillStyle = '#0ff';
+            ctx.font = fontSize + 'px monospace';
 
-function drawMatrix() {
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-    ctx.fillRect(0, 0, width, height);
-    ctx.fillStyle = '#0ff';
-    ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-    for (let i = 0; i < drops.length; i++) {
-        const text = letters.charAt(Math.floor(Math.random() * letters.length));
-        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-
-        if (drops[i] * fontSize > height && Math.random() > 0.975) {
-            drops[i] = 0;
+                if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
         }
-        drops[i]++;
-    }
-}
-setInterval(drawMatrix, 35);
+        setInterval(drawMatrix, 35);
 
-// Handle window resize
-window.addEventListener('resize', () => {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-});
+        // Handle window resize
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
 
-// GSAP Animations
-gsap.registerPlugin(ScrollTrigger);
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
 
-gsap.utils.toArray('section').forEach(section => {
-    gsap.from(section, {
-        opacity: 0,
-        y: 50,
-        duration: 1,
-        scrollTrigger: {
-            trigger: section,
-            start: 'top 80%',
-            end: 'bottom 20%',
-            toggleActions: 'play none none reverse'
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    end: 'bottom 20%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Typewriter effect for the subtitle
+        const subtitle = document.querySelector('header p');
+        const text = subtitle.textContent;
+        subtitle.textContent = '';
+        let i = 0;
+        function typeWriter() {
+            if (i < text.length) {
+                subtitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
         }
-    });
-});
-
-// Typewriter effect for the subtitle
-const subtitle = document.querySelector('header p');
-const text = subtitle.textContent;
-subtitle.textContent = '';
-let i = 0;
-function typeWriter() {
-    if (i < text.length) {
-        subtitle.textContent += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 50);
-    }
-}
-typeWriter();
-</script>
+        typeWriter();
+    </script>
 </body>
 </html>

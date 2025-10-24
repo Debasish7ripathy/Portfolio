@@ -3,472 +3,2656 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Debasish Tripathy - AI/ML Engineer Portfolio</title>
+    <title>Debasish Tripathy - AI/ML Engineer & Security Researcher</title>
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
     <!-- GSAP for Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 
     <!-- Font and Icons -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Orbitron:wght@400;700&display=swap">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
-    <!-- Custom Styles -->
     <style>
+        :root {
+            --primary-cyan: #38bdf8;
+            --primary-magenta: #a855f7;
+            --primary-blue: #312e81;
+            --accent-lime: #22d3ee;
+            --dark-bg: #020617;
+            --card-bg: rgba(15, 23, 42, 0.72);
+            --card-border: rgba(148, 163, 184, 0.18);
+            --text-light: #f8fafc;
+            --text-muted: rgba(226, 232, 240, 0.78);
+            --glow-cyan: 0 0 26px rgba(56, 189, 248, 0.45);
+            --glow-magenta: 0 0 24px rgba(168, 85, 247, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 120px; /* Increased offset for fixed navbar */
+        }
+
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #0a0a1a;
-            color: #e0e0ff;
+            background-color: var(--dark-bg);
+            color: var(--text-light);
             position: relative;
             overflow-x: hidden;
+            line-height: 1.6;
         }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.22), transparent 45%),
+                        radial-gradient(circle at 80% 0%, rgba(56, 189, 248, 0.24), transparent 35%),
+                        linear-gradient(160deg, rgba(15, 23, 42, 0.2), rgba(2, 6, 23, 0.95));
+            pointer-events: none;
+            z-index: -3;
+        }
+
+        /* Section scroll offset for fixed navbar */
+        section[id] {
+            scroll-margin-top: 120px;
+        }
+
+        /* Main content positioning */
+        main {
+            position: relative;
+            z-index: 1;
+            background: var(--dark-bg);
+        }
+
+        /* Ensure sections have proper stacking */
+        section {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Custom Cursor - Optimized */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--primary-cyan);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease, background 0.15s ease;
+            will-change: transform;
+            display: none; /* Hidden by default for better performance */
+        }
+
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--primary-magenta);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transition: transform 0.2s ease;
+            opacity: 0.5;
+            will-change: transform;
+            display: none; /* Hidden by default for better performance */
+        }
+
+        /* Show cursor only on non-touch devices */
+        @media (hover: hover) and (pointer: fine) {
+            * {
+                cursor: none !important;
+            }
+            .cursor,
+            .cursor-follower {
+                display: block;
+            }
+        }
+
+        .cursor.active {
+            transform: scale(1.5);
+            background: rgba(0, 255, 255, 0.2);
+        }
+
+        .cursor-follower.active {
+            transform: scale(1.2);
+        }
+
+        /* Orbitron Font */
         .orbitron {
             font-family: 'Orbitron', sans-serif;
         }
+
+        .mono {
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        /* Gradient Text */
         .gradient-text {
-            background: linear-gradient(45deg, #00ffff, #ff00ff);
+            background: linear-gradient(45deg, var(--primary-cyan), var(--primary-magenta));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        .card-hover:hover {
-            transform: translateY(-5px) scale(1.02);
-            box-shadow: 0 10px 20px rgba(0, 255, 255, 0.2);
+
+        .gradient-text-alt {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
-        header {
-            background: linear-gradient(135deg, #1a1a3a 0%, #3b00ff 100%);
+
+        /* Glow Effects */
+        .glow-cyan {
+            text-shadow: 0 0 12px rgba(56, 189, 248, 0.45), 0 0 22px rgba(56, 189, 248, 0.35);
+        }
+
+        .glow-magenta {
+            text-shadow: 0 0 12px rgba(168, 85, 247, 0.45), 0 0 20px rgba(168, 85, 247, 0.35);
+        }
+
+        /* Neon Border */
+        .neon-border {
             position: relative;
-            overflow: hidden;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            border: 2px solid transparent;
+            background: var(--card-bg);
+            backdrop-filter: blur(14px);
         }
-        header::before {
+
+        .neon-border::before {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background-image: url('https://www.transparenttextures.com/patterns/circuit-board.png');
-            background-size: cover;
-            background-repeat: no-repeat;
-            opacity: 0.1;
-            animation: rotateBG 20s linear infinite;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--primary-magenta), var(--primary-blue), var(--primary-cyan));
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            background-size: 300% 300%;
+            animation: gradientShift 3s ease infinite;
         }
-        @keyframes rotateBG {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+
+        .neon-border:hover::before {
+            opacity: 1;
         }
-        canvas {
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes headingGlow {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(0.9);
+                opacity: 0.3;
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.55;
+            }
+        }
+
+        .hero-container {
+            width: min(1180px, calc(100% - 3rem));
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-layout {
+            display: grid;
+            gap: 2.5rem;
+            align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+            .hero-layout {
+                grid-template-columns: 1.05fr 0.95fr;
+                gap: 4rem;
+            }
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            font-size: 0.9rem;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            background: rgba(56, 189, 248, 0.12);
+            color: var(--primary-cyan);
+            border: 1px solid rgba(56, 189, 248, 0.25);
+            box-shadow: 0 8px 24px rgba(56, 189, 248, 0.15);
+        }
+
+        .hero-title {
+            font-size: clamp(2.8rem, 4vw + 1rem, 4.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+        }
+
+        .hero-description {
+            color: var(--text-muted);
+            font-size: clamp(1.05rem, 1vw + 1rem, 1.25rem);
+            max-width: 36rem;
+        }
+
+        .hero-highlight-list {
+            display: grid;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+            list-style: none;
+            padding: 0;
+        }
+
+        .hero-highlight-list li {
+            display: inline-flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            padding: 1rem 1.3rem;
+            border-radius: 1.25rem;
+            background: linear-gradient(140deg, rgba(15, 23, 42, 0.85), rgba(30, 41, 59, 0.75));
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            width: 100%;
+            font-size: 0.98rem;
+            box-shadow: 0 16px 34px rgba(2, 6, 23, 0.45);
+        }
+
+        .hero-highlight-list li i {
+            font-size: 1.1rem;
+            margin-top: 0.1rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-highlight-list {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .hero-highlight-list li {
+                width: 100%;
+                justify-content: flex-start;
+            }
+        }
+
+        .hero-action-bar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            gap: 1rem;
+            margin-top: 2.5rem;
+        }
+
+        @media (min-width: 640px) {
+            .hero-stats {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        .hero-stat {
+            position: relative;
+            padding: 1.4rem 1.5rem;
+            border-radius: 1.25rem;
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.12), rgba(15, 23, 42, 0.75));
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 20px 40px rgba(2, 6, 23, 0.45);
+            overflow: hidden;
+        }
+
+        .hero-stat::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(56, 189, 248, 0.25), transparent 55%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+        }
+
+        .hero-stat:hover::after {
+            opacity: 1;
+        }
+
+        .hero-stat-value {
+            font-size: clamp(2.4rem, 1.8vw + 1.8rem, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -0.02em;
+            background: linear-gradient(120deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-card {
+            position: relative;
+            border-radius: 1.75rem;
+            overflow: hidden;
+            padding: clamp(1.8rem, 2.5vw, 2.6rem);
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0.88) 0%, rgba(15, 23, 42, 0.65) 100%);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            box-shadow: 0 30px 70px rgba(2, 6, 23, 0.6);
+        }
+
+        .hero-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.18), transparent 65%),
+                        radial-gradient(circle at 80% 0%, rgba(168, 85, 247, 0.22), transparent 60%);
+            opacity: 0.85;
+            pointer-events: none;
+        }
+
+        .hero-card::after {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            border: 1px solid rgba(56, 189, 248, 0.1);
+            pointer-events: none;
+        }
+
+        .hero-card-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 999px;
+            background: rgba(2, 6, 23, 0.65);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            font-size: 0.85rem;
+            letter-spacing: 0.03em;
+            text-transform: uppercase;
+        }
+
+        .hero-card-list {
+            display: grid;
+            gap: 0.75rem;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .hero-card-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.75rem;
+            font-size: 0.98rem;
+            color: var(--text-muted);
+        }
+
+        .hero-card-list li i {
+            margin-top: 0.15rem;
+        }
+
+        .hero-orb {
+            position: absolute;
+            width: clamp(180px, 22vw, 260px);
+            height: clamp(180px, 22vw, 260px);
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.55), rgba(56, 189, 248, 0));
+            filter: blur(0px);
+            opacity: 0.45;
+            animation: float 12s ease-in-out infinite;
+            mix-blend-mode: screen;
+            pointer-events: none;
+        }
+
+        .hero-orb.orb-1 {
+            top: 12%;
+            left: -6%;
+            animation-delay: -2s;
+        }
+
+        .hero-orb.orb-2 {
+            bottom: -8%;
+            right: -6%;
+            animation-delay: -6s;
+        }
+
+        .section-subtitle {
+            text-transform: uppercase;
+            letter-spacing: 0.32em;
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        /* Particles Background */
+        #particles-js {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -2;
+        }
+
+        /* Matrix Canvas */
+        #matrix {
             position: fixed;
             top: 0;
             left: 0;
             z-index: -1;
+            opacity: 0.15;
         }
-        .glow {
-            text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff;
+
+        /* Header Section */
+        header {
+            position: relative;
+            overflow: hidden;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 0 120px;
+            background: radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.35), transparent 55%),
+                        radial-gradient(circle at 90% 10%, rgba(168, 85, 247, 0.3), transparent 40%),
+                        linear-gradient(135deg, rgba(2, 6, 23, 0.9), rgba(15, 23, 42, 0.95));
+            background-size: 180% 180%;
+            animation: gradientShift 18s ease infinite;
+            z-index: 0;
         }
-        .neon-border {
-            border: 2px solid transparent;
-            border-image: linear-gradient(45deg, #00ffff, #ff00ff);
-            border-image-slice: 1;
-            box-shadow: 0 0 10px #00ffff, 0 0 20px #ff00ff;
+
+        header::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="240" height="240" fill="none"><path d="M0 170L170 0" stroke="rgba(56,189,248,0.15)" stroke-width="1"/><path d="M70 240L240 70" stroke="rgba(168,85,247,0.12)" stroke-width="1"/></svg>');
+            background-size: 320px;
+            opacity: 0.18;
+            mix-blend-mode: screen;
+            pointer-events: none;
         }
-        /* Responsive Navigation */
-        #menuToggle {
+
+        header::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(2, 6, 23, 0) 0%, rgba(2, 6, 23, 0.85) 100%);
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Floating Animation */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .float-animation {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Navigation */
+        nav {
+            background: rgba(2, 6, 23, 0.55);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(148, 163, 184, 0.16);
+            transition: background 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            will-change: background, box-shadow;
+        }
+
+        nav.scrolled {
+            background: rgba(2, 6, 23, 0.92);
+            box-shadow: 0 20px 45px rgba(2, 6, 23, 0.55);
+            border-bottom-color: rgba(56, 189, 248, 0.25);
+        }
+
+        nav a {
+            position: relative;
+            transition: color 0.2s ease;
+            padding: 0.5rem 0;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
+            transition: width 0.25s ease;
+        }
+
+        nav a:hover {
+            color: var(--primary-cyan);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--primary-cyan);
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border-radius: 24px;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, border-color 0.35s ease;
+            border: 1px solid var(--card-border);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 24px 60px rgba(2, 6, 23, 0.42);
+            will-change: transform;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top left, rgba(56, 189, 248, 0.2), transparent 55%),
+                        radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.16), transparent 60%);
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            pointer-events: none;
+        }
+
+        .card:hover::before {
+            opacity: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.01);
+            box-shadow:
+                0 30px 70px rgba(2, 6, 23, 0.6),
+                0 0 35px rgba(56, 189, 248, 0.25);
+            border-color: rgba(56, 189, 248, 0.35);
+        }
+
+        /* Skill Bars */
+        .skill-bar {
+            background: rgba(255, 255, 255, 0.05);
+            height: 12px;
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta));
+            border-radius: 10px;
+            transition: width 1s ease-out;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+        }
+
+        .skill-progress::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            animation: shimmer 2.5s infinite;
+        }
+
+        @keyframes shimmer {
+            to { left: 100%; }
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 50px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 3px;
+            background: linear-gradient(180deg, var(--primary-cyan), var(--primary-magenta), var(--primary-cyan));
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 50px;
+            padding-left: 10px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -57px;
+            top: 5px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary-cyan);
+            border: 4px solid var(--dark-bg);
+            border-radius: 50%;
+            box-shadow: 0 0 15px var(--primary-cyan);
+            animation: pulse 2.5s infinite;
+            z-index: 1;
+        }
+
+        .timeline-item:hover::before {
+            animation-play-state: paused;
+            background: var(--primary-magenta);
+            box-shadow: 0 0 15px var(--primary-magenta);
+        }
+
+        @keyframes pulse {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 1; 
+            }
+            50% { 
+                transform: scale(1.15); 
+                opacity: 0.85; 
+            }
+        }
+
+        @keyframes shimmer {
+            to { left: 100%; }
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(120deg, rgba(56, 189, 248, 0.95), rgba(59, 130, 246, 0.9), rgba(168, 85, 247, 0.9));
+            color: white;
+            padding: 0.9rem 2.6rem;
+            border-radius: 999px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            transition: transform 0.35s ease, box-shadow 0.35s ease, background 0.35s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 18px 38px rgba(56, 189, 248, 0.35);
+            will-change: transform;
+        }
+
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 1px;
+            border-radius: inherit;
+            background: linear-gradient(120deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.4));
+            opacity: 0;
+            transition: opacity 0.35s ease;
+            z-index: -1;
+        }
+
+        .btn-primary:hover::before {
+            opacity: 1;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 28px 54px rgba(56, 189, 248, 0.5);
+        }
+
+        .btn-primary:active {
+            transform: translateY(0);
+        }
+
+        .btn-secondary {
+            position: relative;
+            padding: 0.9rem 2.6rem;
+            border-radius: 999px;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: var(--text-light);
+            background: rgba(15, 23, 42, 0.65);
+            border: 1px solid rgba(148, 163, 184, 0.25);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease, background 0.3s ease;
+            backdrop-filter: blur(16px);
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            border-color: rgba(56, 189, 248, 0.4);
+            background: rgba(56, 189, 248, 0.18);
+            box-shadow: 0 18px 40px rgba(56, 189, 248, 0.25);
+        }
+
+        .btn-secondary:active {
+            transform: translateY(0);
+        }
+
+        /* Stats Counter */
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--primary-cyan), var(--primary-magenta));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Section Heading */
+        .section-heading {
+            font-size: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+            position: relative;
+            display: block;
+            width: 100%;
+            padding: 1rem 20px 2.5rem;
+            background-size: 200% 200%;
+            animation: gradientShift 8s ease infinite;
+            will-change: background-position;
+            z-index: 1;
+        }
+
+        .section-heading::after {
+            content: '';
+            position: absolute;
+            bottom: 0.8rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: min(160px, 45%);
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-cyan), var(--primary-magenta), var(--primary-cyan));
+            border-radius: 999px;
+            background-size: 200% 100%;
+            animation: gradientShift 3s ease infinite;
+        }
+
+        .section-heading::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: min(420px, 85%);
+            height: 140%;
+            max-height: 200px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.18) 0%, rgba(0, 0, 0, 0) 70%);
+            opacity: 0.45;
+            pointer-events: none;
+            z-index: -1;
+            animation: headingGlow 6s ease-in-out infinite;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(180deg, var(--primary-cyan), var(--primary-magenta));
+            border-radius: 5px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-cyan);
+        }
+
+        /* Responsive Menu */
+        .mobile-menu-btn {
             display: none;
         }
-        #menuToggle:checked + ul {
-            display: flex;
+
+        /* Mobile Menu - Hidden by default */
+        .mobile-menu {
+            position: fixed;
+            top: 0;
+            right: -100%;
+            width: 80%;
+            max-width: 400px;
+            height: 100vh;
+            background: rgba(10, 10, 26, 0.98);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            transition: right 0.3s ease;
+            padding: 80px 30px;
+            box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+            border-left: 1px solid rgba(0, 255, 255, 0.2);
         }
+
+        .mobile-menu.active {
+            right: 0;
+        }
+
+        /* Mobile Menu Overlay */
+        .mobile-menu-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .mobile-menu-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Mobile Menu Links Enhancement */
+        .mobile-menu a {
+            position: relative;
+            display: inline-block;
+            transition: color 0.2s ease;
+        }
+
+        .mobile-menu a::before {
+            content: '▶';
+            position: absolute;
+            left: -20px;
+            opacity: 0;
+            transition: opacity 0.2s ease, left 0.2s ease;
+            color: var(--primary-cyan);
+        }
+
+        .mobile-menu a:hover::before {
+            opacity: 1;
+            left: -25px;
+        }
+
         @media (max-width: 768px) {
-            nav ul {
-                display: none;
-                flex-direction: column;
-                align-items: center;
-            }
-            nav ul li {
-                margin: 10px 0;
-            }
-            #menuToggle {
+            .mobile-menu-btn {
                 display: block;
             }
+
+            .desktop-menu {
+                display: none;
+            }
+
+            .section-heading {
+                font-size: 2rem;
+            }
+
+            .stat-number {
+                font-size: 2rem;
+            }
+
+            header h1 {
+                font-size: 2.5rem !important;
+            }
+
+            header p {
+                font-size: 1.2rem !important;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .timeline {
+                padding-left: 30px;
+            }
+
+            .timeline-item::before {
+                left: -40px;
+            }
         }
-        .section-heading {
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
+
+        @media (max-width: 480px) {
+            .section-heading {
+                font-size: 1.5rem;
+            }
+
+            header h1 {
+                font-size: 2rem !important;
+            }
+
+            .mobile-menu {
+                width: 90%;
+            }
+
+            .stat-number {
+                font-size: 1.5rem;
+            }
+        }
+
+        /* Badge */
+        .badge {
+            display: inline-block;
+            padding: 0.45rem 1.1rem;
+            background: rgba(15, 23, 42, 0.75);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            border-radius: 999px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            transition: transform 0.25s ease, background 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+            backdrop-filter: blur(12px);
+        }
+
+        .badge:hover {
+            background: rgba(56, 189, 248, 0.2);
+            border-color: rgba(56, 189, 248, 0.4);
+            transform: translateY(-3px);
+            box-shadow: 0 14px 32px rgba(56, 189, 248, 0.25);
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark-bg);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-content {
             text-align: center;
         }
-        .card {
-            background: rgba(26, 26, 58, 0.8);
-            border-radius: 10px;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(0, 255, 255, 0.2);
+            border-top-color: var(--primary-cyan);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
         }
-        .card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 255, 255, 0.2);
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Tooltip */
+        .tooltip {
+            position: relative;
+        }
+
+        .tooltip::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 8px 12px;
+            background: rgba(0, 0, 0, 0.9);
+            color: var(--primary-cyan);
+            border: 1px solid var(--primary-cyan);
+            border-radius: 5px;
+            font-size: 0.85rem;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .tooltip:hover::after {
+            opacity: 1;
+        }
+
+        /* Progress Ring */
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+
+        .progress-ring-circle {
+            transition: stroke-dashoffset 0.5s ease;
+        }
+
+        /* Glitch Effect */
+        @keyframes glitch {
+            0% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+            100% { transform: translate(0); }
+        }
+
+        .glitch:hover {
+            animation: glitch 0.3s infinite;
+        }
+
+        /* Icon Animation */
+        .icon-spin {
+            transition: transform 0.3s ease;
+        }
+
+        .icon-spin:hover {
+            transform: rotate(360deg);
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            
+            html {
+                scroll-behavior: auto;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- AI Matrix Background -->
+    <!-- Loading Screen -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <div class="loader-spinner mx-auto mb-4"></div>
+            <p class="orbitron gradient-text text-xl">Initializing System...</p>
+        </div>
+    </div>
+
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <!-- Particles Background -->
+    <div id="particles-js"></div>
+
+    <!-- AI Matrix effect -->
     <canvas id="matrix"></canvas>
 
-    <!-- Header Section -->
-    <header class="text-center text-white">
-        <div class="z-10 relative">
-            <h1 class="text-6xl font-bold mb-4 gradient-text orbitron glow" style="text-shadow: 3px 3px 10px rgba(0,0,0,0.5);">Debasish Tripathy</h1>
-            <p class="text-2xl text-cyan-300 orbitron mb-8">AI/ML Engineer | Cybersecurity Specialist | Future Tech Innovator</p>
-            <a href="#about" class="bg-cyan-500 text-white px-6 py-3 rounded-full hover:bg-cyan-600 transition duration-300 orbitron">Explore My Work</a>
-        </div>
-    </header>
-
     <!-- Navigation -->
-    <nav class="bg-gray-900 p-4 sticky top-0 z-50 shadow-lg">
-        <div class="container mx-auto flex justify-between items-center">
-            <label for="menuToggle" class="cursor-pointer md:hidden block">
-                <i class="fas fa-bars text-2xl"></i>
-            </label>
-            <input type="checkbox" id="menuToggle" class="hidden">
-            <ul class="flex space-x-6 orbitron">
-                <li><a href="#about" class="hover:text-cyan-400 transition duration-300">About</a></li>
-                <li><a href="#skills" class="hover:text-cyan-400 transition duration-300">Skills</a></li>
-                <li><a href="#experience" class="hover:text-cyan-400 transition duration-300">Experience</a></li>
-                <li><a href="#projects" class="hover:text-cyan-400 transition duration-300">Projects</a></li>
-                <li><a href="#education" class="hover:text-cyan-400 transition duration-300">Education</a></li>
-                <li><a href="#achievements" class="hover:text-cyan-400 transition duration-300">Achievements</a></li>
-                <li><a href="#contact" class="hover:text-cyan-400 transition duration-300">Contact</a></li>
+    <nav class="fixed top-0 left-0 right-0 z-50 shadow-lg" id="navbar">
+        <div class="container mx-auto px-4 py-4">
+            <div class="flex justify-between items-center">
+                <div class="orbitron gradient-text text-2xl font-bold">DT</div>
+                
+                <!-- Desktop Menu -->
+                <ul class="desktop-menu hidden md:flex space-x-6 orbitron">
+                    <li><a href="#about" class="hover:text-cyan-400 transition duration-300">About</a></li>
+                    <li><a href="#skills" class="hover:text-cyan-400 transition duration-300">Skills</a></li>
+                    <li><a href="#experience" class="hover:text-cyan-400 transition duration-300">Experience</a></li>
+                    <li><a href="#projects" class="hover:text-cyan-400 transition duration-300">Projects</a></li>
+                    <li><a href="#research" class="hover:text-cyan-400 transition duration-300">Research</a></li>
+                    <li><a href="#education" class="hover:text-cyan-400 transition duration-300">Education</a></li>
+                    <li><a href="#achievements" class="hover:text-cyan-400 transition duration-300">Achievements</a></li>
+                    <li><a href="#contact" class="hover:text-cyan-400 transition duration-300">Contact</a></li>
+                </ul>
+
+                <!-- Mobile Menu Button -->
+                <button class="mobile-menu-btn text-2xl text-cyan-400 hover:text-magenta-400 transition duration-300" id="mobileMenuBtn" aria-label="Open menu">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Overlay -->
+        <div class="mobile-menu-overlay" id="mobileMenuOverlay"></div>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <button class="absolute top-6 right-6 text-3xl text-cyan-400 hover:text-magenta-400 transition duration-300" id="closeMobileMenu" aria-label="Close menu">
+                <i class="fas fa-times"></i>
+            </button>
+            <ul class="orbitron space-y-6 text-xl">
+                <li><a href="#about" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">About</a></li>
+                <li><a href="#skills" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Skills</a></li>
+                <li><a href="#experience" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Experience</a></li>
+                <li><a href="#projects" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Projects</a></li>
+                <li><a href="#research" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Research</a></li>
+                <li><a href="#education" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Education</a></li>
+                <li><a href="#achievements" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Achievements</a></li>
+                <li><a href="#contact" class="block hover:text-cyan-400 transition duration-300 mobile-menu-link">Contact</a></li>
             </ul>
         </div>
     </nav>
 
+    <!-- Header Section -->
+    <header class="relative text-white">
+        <span class="hero-orb orb-1"></span>
+        <span class="hero-orb orb-2"></span>
+        <div class="hero-container">
+            <div class="hero-layout">
+                <div class="space-y-6 relative">
+                    <div class="flex flex-wrap items-center gap-3" data-animate="fade-right">
+                        <span class="hero-badge"><i class="fas fa-sparkles"></i> Open to pioneering AI roles</span>
+                        <span class="hero-chip text-cyan-200/90"><i class="fas fa-location-dot text-cyan-300"></i> Bengaluru · Remote Ready</span>
+                    </div>
+                    <h1 class="hero-title gradient-text orbitron glow-cyan" data-animate="fade-up">Debasish Tripathy</h1>
+                    <p class="hero-description" id="hero-subtitle" data-animate="fade-up" data-delay="0.1">AI/ML Engineer · Security Researcher · Founder</p>
+                    <p class="hero-description text-slate-200/75" data-animate="fade-up" data-delay="0.15">
+                        I design resilient, human-centered intelligence—delivering reliable AI products, safeguarding enterprise systems, and leading teams from problem framing to impact at scale.
+                    </p>
+                    <ul class="hero-highlight-list" data-animate="fade-up" data-delay="0.2">
+                        <li><i class="fas fa-shield-halved text-cyan-300"></i><span>Trusted to harden Philips' global AI stack, slashing security compliance timelines by <span class="text-cyan-300 font-semibold">74%</span>.</span></li>
+                        <li><i class="fas fa-rocket text-cyan-300"></i><span>Founder of AI Food Pantry—<span class="text-cyan-300 font-semibold">1,200+ users</span> and $1,000 in cloud grants powering equitable food access.</span></li>
+                        <li><i class="fas fa-bug text-cyan-300"></i><span>Documented vulnerabilities at <span class="text-cyan-300 font-semibold">Google, GitHub & LinkedIn</span> with responsible disclosure.</span></li>
+                        <li><i class="fas fa-lightbulb text-cyan-300"></i><span>4 granted patents & 3 research publications in privacy, computer vision, and evaluation science.</span></li>
+                    </ul>
+                    <div class="hero-action-bar" data-animate="fade-up" data-delay="0.28">
+                        <a href="#projects" class="btn-primary orbitron">
+                            <i class="fas fa-bolt mr-2"></i>Explore My Work
+                        </a>
+                        <a href="https://drive.google.com/file/d/1B8h-VRDY7DcgVf6iQ0_m42-pphHgKIE7/view?usp=sharing" target="_blank" class="btn-secondary orbitron">
+                            <i class="fas fa-download mr-2"></i>Download Resume
+                        </a>
+                        <a href="#contact" class="btn-secondary orbitron">
+                            <i class="fas fa-paper-plane mr-2"></i>Let's Collaborate
+                        </a>
+                    </div>
+                    <div class="hero-stats" data-animate="fade-up" data-delay="0.36">
+                        <div class="hero-stat">
+                            <div class="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-cyan-200/80 mb-3">
+                                <span>Academic</span>
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <span class="hero-stat-value counter" data-target="8.11">0</span>
+                            <p class="text-sm text-slate-200/75 mt-1">CGPA · Cybersecurity major</p>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-cyan-200/80 mb-3">
+                                <span>Impact</span>
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <span class="hero-stat-value counter" data-target="1200">0</span>
+                            <p class="text-sm text-slate-200/75 mt-1">Active users on AI platforms</p>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-cyan-200/80 mb-3">
+                                <span>Accuracy</span>
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <span class="hero-stat-value counter" data-target="95">0</span>
+                            <p class="text-sm text-slate-200/75 mt-1">AI systems exceeding expectations</p>
+                        </div>
+                        <div class="hero-stat">
+                            <div class="flex items-center justify-between text-xs uppercase tracking-[0.35em] text-cyan-200/80 mb-3">
+                                <span>Portfolio</span>
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                            <span class="hero-stat-value counter" data-target="10">0</span>
+                            <p class="text-sm text-slate-200/75 mt-1">End-to-end products delivered</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-card neon-border" data-animate="fade-left">
+                    <div class="hero-card-header">
+                        <div class="w-14 h-14 rounded-2xl bg-cyan-500/10 border border-cyan-400/30 flex items-center justify-center text-2xl text-cyan-200">
+                            <i class="fas fa-shield-halved"></i>
+                        </div>
+                        <div>
+                            <span class="hero-chip text-cyan-200/90"><i class="fas fa-lightbulb"></i> AI x Security</span>
+                            <h3 class="text-2xl font-semibold orbitron mt-3">Designing trustworthy intelligence</h3>
+                        </div>
+                    </div>
+                    <ul class="hero-card-list mt-6">
+                        <li><i class="fas fa-lock text-cyan-300"></i><span>Led AI security protocols at Philips, governing PKI lifecycles and SailPoint automation for 500+ teams.</span></li>
+                        <li><i class="fas fa-diagram-project text-cyan-300"></i><span>Architected scalable MLOps pipelines—from data strategy to production rollouts with 99.9% uptime.</span></li>
+                        <li><i class="fas fa-robot text-cyan-300"></i><span>Builds agentic systems and RAG workflows powering healthcare, food sustainability, and safety innovations.</span></li>
+                        <li><i class="fas fa-globe text-cyan-300"></i><span>Mentors communities, leads research collectives, and advocates for ethical, inclusive AI adoption.</span></li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2 mt-8">
+                        <span class="badge">AI Security</span>
+                        <span class="badge">MLOps Leadership</span>
+                        <span class="badge">Generative AI</span>
+                        <span class="badge">Responsible Innovation</span>
+                    </div>
+                    <div class="mt-8 flex items-center gap-3 text-sm text-slate-200/70">
+                        <i class="fas fa-circle-check text-cyan-300"></i>
+                        <span>Actively interviewing for 2025 new grad roles & research fellowships</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-12">
+    <main class="container mx-auto max-w-6xl px-4 py-12">
         <!-- About Section -->
         <section id="about" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">About Me</h2>
-            <div class="card">
-                <p class="text-lg leading-relaxed">
-                    I am an innovative AI/ML Engineer specializing in cutting-edge technologies that drive the future of artificial intelligence. My expertise spans deep learning, natural language processing, and computer vision, allowing me to develop advanced AI solutions that challenge the status quo. With a solid foundation in cybersecurity, I prioritize the creation of intelligent systems that are secure, ethical, and resilient against emerging threats. My commitment to integrating robust security measures into AI development ensures that the solutions I create are not only groundbreaking but also trustworthy and safe for users.
-                </p>
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">About Me</h2>
+            <div class="card neon-border">
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div>
+                        <p class="text-lg leading-relaxed mb-4">
+                            Final-year <span class="text-cyan-400 font-semibold">Computer Science & Engineering (Cybersecurity)</span> student from Bengaluru, specializing in AI/ML engineering and security research.
+                        </p>
+                        <p class="text-lg leading-relaxed mb-4">
+                            I actively discover and report vulnerabilities in major platforms like <span class="text-cyan-400 font-semibold">Google, GitHub, and LinkedIn</span>. With proven expertise across the complete ML lifecycle—from research to production deployment—I focus on building secure, scalable systems.
+                        </p>
+                        <p class="text-lg leading-relaxed">
+                            My work integrates cutting-edge AI with robust security measures, ensuring solutions are not only groundbreaking but also trustworthy and safe. I've led technical teams, secured funding, and delivered high-impact AI solutions that drive real-world change.
+                        </p>
+                    </div>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="orbitron">AI/ML Engineering</span>
+                                <span class="text-cyan-400">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="95"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="orbitron">Cybersecurity</span>
+                                <span class="text-cyan-400">92%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="92"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="orbitron">Computer Vision</span>
+                                <span class="text-cyan-400">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="90"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="orbitron">Cloud & DevOps</span>
+                                <span class="text-cyan-400">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="88"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="orbitron">Research & Innovation</span>
+                                <span class="text-cyan-400">93%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" data-progress="93"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Skills Section -->
         <section id="skills" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">Technical Prowess</h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Technical Arsenal</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <!-- AI/ML Skills -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-brain mr-2"></i> AI & Machine Learning
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-brain mr-3 icon-spin"></i> AI & Machine Learning
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>Deep Learning (TensorFlow, PyTorch)</li>
-                        <li>Natural Language Processing</li>
-                        <li>Computer Vision (OpenCV, YOLO)</li>
-                        <li>Reinforcement Learning</li>
-                        <li>GANs & Transformers</li>
-                        <li>MLOps & AI Deployment</li>
-                    </ul>
+                    <div class="space-y-2">
+                        <span class="badge">Deep Learning</span>
+                        <span class="badge">CNNs</span>
+                        <span class="badge">RNNs</span>
+                        <span class="badge">Transformers</span>
+                        <span class="badge">ViT</span>
+                        <span class="badge">DINO</span>
+                        <span class="badge">Transfer Learning</span>
+                        <span class="badge">Computer Vision</span>
+                        <span class="badge">YOLO</span>
+                        <span class="badge">Image Segmentation</span>
+                        <span class="badge">NLP</span>
+                        <span class="badge">LLM Fine-tuning</span>
+                        <span class="badge">RAG</span>
+                        <span class="badge">Sentiment Analysis</span>
+                        <span class="badge">NER</span>
+                        <span class="badge">Generative AI</span>
+                        <span class="badge">Diffusion Models</span>
+                        <span class="badge">GANs</span>
+                        <span class="badge">MLOps</span>
+                    </div>
                 </div>
+
                 <!-- Cybersecurity Skills -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-shield-alt mr-2"></i> Cybersecurity Expertise
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-shield-alt mr-3 icon-spin"></i> Cybersecurity
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>AI-Powered Threat Detection</li>
-                        <li>Quantum-Resistant Cryptography</li>
-                        <li>Blockchain Security</li>
-                        <li>IoT Security</li>
-                        <li>Ethical Hacking & Pentesting</li>
-                        <li>Digital Forensics</li>
-                        <li>Privacy-Preserving AI</li>
-                        <li>Secure AI Model Development</li>
-                    </ul>
+                    <div class="space-y-2">
+                        <span class="badge">AI Security</span>
+                        <span class="badge">Adversarial Attacks</span>
+                        <span class="badge">Model Robustness</span>
+                        <span class="badge">Ethical AI</span>
+                        <span class="badge">Threat Detection</span>
+                        <span class="badge">Vulnerability Analysis</span>
+                        <span class="badge">Federated Learning</span>
+                        <span class="badge">Differential Privacy</span>
+                        <span class="badge">PII Detection</span>
+                        <span class="badge">PKI Infrastructure</span>
+                        <span class="badge">Cisco Umbrella</span>
+                        <span class="badge">SailPoint</span>
+                        <span class="badge">Compliance</span>
+                        <span class="badge">HIPAA</span>
+                        <span class="badge">Penetration Testing</span>
+                    </div>
                 </div>
-                <!-- Development Technologies -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-code mr-2"></i> Development Technologies
+
+                <!-- Programming Languages -->
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-code mr-3 icon-spin"></i> Programming
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>Python</li>
-                        <li>Java</li>
-                        <li>JavaScript</li>
-                        <li>Flask & FastAPI</li>
-                        <li>React & Node.js</li>
-                        <li>SQL & NoSQL Databases</li>
-                        <li>Cloud Computing (AWS, GCP)</li>
-                        <li>Containerization (Docker, Kubernetes)</li>
-                    </ul>
+                    <div class="space-y-2">
+                        <span class="badge">Python</span>
+                        <span class="badge">Java</span>
+                        <span class="badge">C++</span>
+                        <span class="badge">SQL</span>
+                        <span class="badge">TypeScript</span>
+                        <span class="badge">JavaScript</span>
+                        <span class="badge">Bash</span>
+                        <span class="badge">PyTorch</span>
+                        <span class="badge">TensorFlow</span>
+                        <span class="badge">Hugging Face</span>
+                        <span class="badge">LangChain</span>
+                        <span class="badge">FastAPI</span>
+                        <span class="badge">Django</span>
+                        <span class="badge">React</span>
+                    </div>
+                </div>
+
+                <!-- Data & Visualization -->
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-chart-line mr-3 icon-spin"></i> Data & Analytics
+                    </h3>
+                    <div class="space-y-2">
+                        <span class="badge">Pandas</span>
+                        <span class="badge">NumPy</span>
+                        <span class="badge">Matplotlib</span>
+                        <span class="badge">Seaborn</span>
+                        <span class="badge">Tableau</span>
+                        <span class="badge">Power BI</span>
+                        <span class="badge">Grafana</span>
+                        <span class="badge">Data Analysis</span>
+                        <span class="badge">Statistical Modeling</span>
+                        <span class="badge">A/B Testing</span>
+                    </div>
+                </div>
+
+                <!-- Databases -->
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-database mr-3 icon-spin"></i> Databases
+                    </h3>
+                    <div class="space-y-2">
+                        <span class="badge">MongoDB</span>
+                        <span class="badge">PostgreSQL</span>
+                        <span class="badge">MySQL</span>
+                        <span class="badge">Redis</span>
+                        <span class="badge">SQLite</span>
+                        <span class="badge">Pinecone</span>
+                        <span class="badge">Vector DBs</span>
+                        <span class="badge">Database Design</span>
+                        <span class="badge">Query Optimization</span>
+                    </div>
+                </div>
+
+                <!-- Cloud & DevOps -->
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-cloud mr-3 icon-spin"></i> Cloud & DevOps
+                    </h3>
+                    <div class="space-y-2">
+                        <span class="badge">AWS</span>
+                        <span class="badge">Azure</span>
+                        <span class="badge">GCP</span>
+                        <span class="badge">AWS SageMaker</span>
+                        <span class="badge">AWS Lambda</span>
+                        <span class="badge">Docker</span>
+                        <span class="badge">Kubernetes</span>
+                        <span class="badge">Terraform</span>
+                        <span class="badge">CI/CD</span>
+                        <span class="badge">MLflow</span>
+                        <span class="badge">DVC</span>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
         <section id="experience" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">Professional Journey</h2>
-            <div class="space-y-8">
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Professional Journey</h2>
+            <div class="timeline">
                 <!-- Experience 1 -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-2xl font-semibold mb-2 orbitron">Machine Learning Engineer </h3>
-                    <p class="text-cyan-400 mb-4">GENIE AI, INC. | Remote | 04/2024 - Present</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Pioneered the company's AI Assistant, achieving 92% user satisfaction</li>
-                        <li>Developed FireSafety computer vision system with 87.62% accuracy for automated property inspections</li>
-                        <li>Implemented production-grade NLP chatbot using proprietary LLMs and RAG, reducing response time by 60%</li>
-                        <li>Enhanced Research Copilot through fine-tuning techniques, improving accuracy by 25%</li>
-                    </ul>
+                <div class="timeline-item">
+                    <div class="card neon-border">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-semibold orbitron mb-2">AI Security & Compliance Intern</h3>
+                                <p class="text-cyan-400 text-lg mb-2">Philips</p>
+                                <p class="text-purple-300"><i class="fas fa-map-marker-alt mr-2"></i>Bengaluru, India</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="badge bg-cyan-900">July 2025 - Present</span>
+                                <p class="text-sm text-gray-400 mt-2">Current Role</p>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                            <li>Reduced security compliance timelines by <span class="text-cyan-400 font-semibold">74%</span> (390 to 100 days) through automated validation and reporting</li>
+                            <li>Enhanced identity governance efficiency by <span class="text-cyan-400 font-semibold">40%</span> via automated access control workflows using SailPoint</li>
+                            <li>Managing <span class="text-cyan-400 font-semibold">PKI infrastructure</span> for entire Philips organization, handling certificate lifecycle and cryptographic security</li>
+                            <li>Processing firewall requests and maintaining <span class="text-cyan-400 font-semibold">Cisco Umbrella</span> security platform for DNS-layer security</li>
+                            <li>Authored foundational <span class="text-cyan-400 font-semibold">AI security protocols</span> establishing standards for secure model development</li>
+                            <li>Designed and executed an AI-driven phishing simulation for 500+ employees, identifying critical security risks</li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="badge">Python</span>
+                            <span class="badge">SailPoint</span>
+                            <span class="badge">AWS</span>
+                            <span class="badge">Docker</span>
+                            <span class="badge">AI Security</span>
+                            <span class="badge">Cisco Umbrella</span>
+                            <span class="badge">PKI</span>
+                        </div>
+                    </div>
                 </div>
+
                 <!-- Experience 2 -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-2xl font-semibold mb-2 orbitron">Business Analyst Intern</h3>
-                    <p class="text-cyan-400 mb-4">Internshala | Remote | 05/2023 - 09/2023</p>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Analyzed business requirements and created refined user stories for development teams</li>
-                        <li>Conducted data analysis leading to 0.02% profit increase through strategic recommendations</li>
-                        <li>Implemented process improvements optimizing project delivery timelines by 15%</li>
-                    </ul>
+                <div class="timeline-item">
+                    <div class="card neon-border">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-semibold orbitron mb-2">Founder & Chief Executive Officer</h3>
+                                <p class="text-cyan-400 text-lg mb-2">AI Food Pantry</p>
+                                <p class="text-purple-300"><i class="fas fa-map-marker-alt mr-2"></i>Bengaluru, India</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="badge bg-cyan-900">May 2024 - Present</span>
+                                <p class="text-sm text-gray-400 mt-2">Startup Founder</p>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                            <li>Pioneered an AI food management platform, securing <span class="text-cyan-400 font-semibold">$1,000 in cloud credits</span> and growing to <span class="text-cyan-400 font-semibold">1,200+ users</span></li>
+                            <li>Architected scalable cloud infrastructure with <span class="text-cyan-400 font-semibold">99.9% uptime</span>, supporting 500+ concurrent users</li>
+                            <li>Developed proprietary ingredient recognition model with <span class="text-cyan-400 font-semibold">95% accuracy</span></li>
+                            <li>Built recommendation engine increasing user meal preparation efficiency by <span class="text-cyan-400 font-semibold">37%</span></li>
+                            <li>Forged partnerships with grocery chains to combat food waste and insecurity</li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="badge">PyTorch</span>
+                            <span class="badge">TensorFlow</span>
+                            <span class="badge">AWS SageMaker</span>
+                            <span class="badge">React Native</span>
+                            <span class="badge">MongoDB</span>
+                            <span class="badge">Kubernetes</span>
+                            <span class="badge">FastAPI</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 3 -->
+                <div class="timeline-item">
+                    <div class="card neon-border">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-semibold orbitron mb-2">Trusted Tester</h3>
+                                <p class="text-cyan-400 text-lg mb-2">Google Labs</p>
+                                <p class="text-purple-300"><i class="fas fa-map-marker-alt mr-2"></i>Remote</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="badge bg-cyan-900">Aug 2024 - Jan 2025</span>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                            <li>Identified critical <span class="text-cyan-400 font-semibold">prompt injection vulnerability</span> in Imagen 3, leading to direct patch by Google</li>
+                            <li>Developed and open-sourced unofficial wrapper for <span class="text-cyan-400 font-semibold">AudioFX API</span>, enabling global developer access</li>
+                            <li>Co-authored official <span class="text-cyan-400 font-semibold">AudioFX Cookbook</span> with novel use cases</li>
+                            <li>Performed comparative analysis against DALL-E 3 and Midjourney to refine product strategy</li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="badge">Security Testing</span>
+                            <span class="badge">API Development</span>
+                            <span class="badge">Generative AI</span>
+                            <span class="badge">Technical Writing</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 4 -->
+                <div class="timeline-item">
+                    <div class="card neon-border">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-semibold orbitron mb-2">Machine Learning Engineer</h3>
+                                <p class="text-cyan-400 text-lg mb-2">Genie AI, Inc.</p>
+                                <p class="text-purple-300"><i class="fas fa-map-marker-alt mr-2"></i>Ontario, CA</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="badge bg-cyan-900">Apr 2024 - Jan 2025</span>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                            <li>Developed AI Digital Twin framework and medical bot achieving <span class="text-cyan-400 font-semibold">92% user satisfaction</span></li>
+                            <li>Reduced operational costs by <span class="text-cyan-400 font-semibold">35%</span> for enterprise clients through AI automation</li>
+                            <li>Created Agentic AI framework optimizing warehouse management, cutting costs by <span class="text-cyan-400 font-semibold">36%</span></li>
+                            <li>Engineered fire safety detection system with <span class="text-cyan-400 font-semibold">87.62% accuracy</span> in low-visibility environments</li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="badge">PyTorch</span>
+                            <span class="badge">Transformers</span>
+                            <span class="badge">AWS Lambda</span>
+                            <span class="badge">NVIDIA CUDA</span>
+                            <span class="badge">Docker</span>
+                            <span class="badge">Kubernetes</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Experience 5 -->
+                <div class="timeline-item">
+                    <div class="card neon-border">
+                        <div class="flex flex-wrap justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-2xl font-semibold orbitron mb-2">Software Engineering Intern</h3>
+                                <p class="text-cyan-400 text-lg mb-2">Adobe Inc.</p>
+                                <p class="text-purple-300"><i class="fas fa-map-marker-alt mr-2"></i>Bengaluru, India</p>
+                            </div>
+                            <div class="text-right">
+                                <span class="badge bg-cyan-900">Nov 2023 - Dec 2023</span>
+                            </div>
+                        </div>
+                        <ul class="list-disc list-inside space-y-3 text-lg">
+                            <li>Designed specialized multimodal datasets for Adobe Firefly, improving model precision by <span class="text-cyan-400 font-semibold">36%</span></li>
+                            <li>Enhanced CLIP embedding techniques, boosting text-to-image generation accuracy by <span class="text-cyan-400 font-semibold">20%</span></li>
+                            <li>Collaborated with AI research team on cutting-edge generative models</li>
+                        </ul>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="badge">Adobe Firefly</span>
+                            <span class="badge">PyTorch</span>
+                            <span class="badge">CLIP</span>
+                            <span class="badge">Google Cloud AutoML</span>
+                            <span class="badge">Tableau</span>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Projects Section -->
         <section id="projects" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">Featured Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Featured Projects</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                 <!-- Project 1 -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
-                        <i class="fas fa-utensils mr-2"></i> AI Food Pantry (2024)
-                    </h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Developed an AI-powered food analysis system using ResNet50 for ingredient detection, achieving 95% accuracy to minimize food waste.</li>
-                        <li>Implemented a RAG pipeline with LangChain, reducing nutritional query time by 40% and making healthy options more accessible.</li>
-                        <li>Created a recommendation system using collaborative filtering, achieving 93% relevance in helping users find sustainable food options.</li>
-                        <li>Focused on combating food insecurity by connecting users with local food resources and promoting sustainable practices.</li>
-                        <li class="text-sm text-gray-400">Tech Stack: Gemini, SQLite, LangChain, Pinecone, FastAPI, Redis</li>
+                <div class="card neon-border">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-4 text-cyan-400">
+                            <i class="fas fa-utensils"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold orbitron">AI Food Pantry</h3>
+                            <span class="badge bg-green-900">2024 - Present</span>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>AI-powered food analysis using <span class="text-cyan-400">ResNet50</span> achieving <span class="text-cyan-400 font-semibold">95% accuracy</span></li>
+                        <li>RAG pipeline with LangChain reducing query time by <span class="text-cyan-400 font-semibold">40%</span></li>
+                        <li>Recommendation system with <span class="text-cyan-400 font-semibold">93% relevance</span> using collaborative filtering</li>
+                        <li>Combating food insecurity and promoting sustainability</li>
+                        <li><span class="text-cyan-400 font-semibold">1,200+ active users</span></li>
                     </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">Gemini</span>
+                        <span class="badge">SQLite</span>
+                        <span class="badge">LangChain</span>
+                        <span class="badge">Pinecone</span>
+                        <span class="badge">FastAPI</span>
+                        <span class="badge">Redis</span>
+                    </div>
                 </div>
 
                 <!-- Project 2 -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
-                        <i class="fas fa-unlock-alt mr-2"></i> CryptoCracker (2024)
-                    </h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Developed a crypto analysis system using a BERT classifier to predict encryption algorithms of cipher texts, achieving 95% accuracy for enhanced data security.</li>
-                        <li>Reduced prediction query time by 70-80%, making the decryption process more efficient while minimizing resource consumption.</li>
-                        <li>Regularly updated ML algorithms to ensure relevance and accuracy, employing a fallback mechanism for continuous improvement.</li>
-                        <li>Committed to ethical practices in data handling and cryptography, ensuring the responsible use of technology in the fight against cyber threats.</li>
-                        <li class="text-sm text-gray-400">Tech Stack: BERT, SQLite, LangChain, Pinecone, FastAPI, Redis, Crypto, Security Protocols, Geth, EtherScan, Truffle Suite, Chainalysis, CipherTrace</li>
+                <div class="card neon-border">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-4 text-cyan-400">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold orbitron">Cybersecurity Defense System</h3>
+                            <span class="badge bg-green-900">2025 - Intel Partnership</span>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>ML-powered threat detection identifying <span class="text-cyan-400 font-semibold">98.7% of zero-day vulnerabilities</span></li>
+                        <li>Novel transformer-based autonomous patching system</li>
+                        <li>Real-time network security monitoring</li>
+                        <li>Enterprise-grade deployment for critical infrastructure</li>
                     </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">PyTorch</span>
+                        <span class="badge">Transformers</span>
+                        <span class="badge">Network Security</span>
+                        <span class="badge">ML Ops</span>
+                    </div>
                 </div>
 
                 <!-- Project 3 -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
-                        <i class="fas fa-user-astronaut mr-2"></i> Character AI with Voice Interaction (2024)
-                    </h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Developed a Flask application utilizing Google's Generative AI and advanced NLP technologies for interactive character-based conversations.</li>
-                        <li>Integrated voice recognition and synthesis capabilities, enabling users to engage in dynamic, voice-activated dialogues with AI characters.</li>
-                        <li>Implemented context-aware conversation flows to enhance user experience, allowing characters to maintain coherent discussions over multiple interactions.</li>
-                        <li>Employed a feedback loop mechanism that continuously improves character responses based on user interactions, enhancing engagement and satisfaction.</li>
-                        <li class="text-sm text-gray-400">Tech Stack: Flask, Google Generative AI, AzureML, NLP (NLTK, spaCy, Hugging Face Transformers), MongoDB, Web Speech API</li>
+                <div class="card neon-border">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-4 text-cyan-400">
+                            <i class="fas fa-hospital"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold orbitron">Centralized Healthcare System</h3>
+                            <span class="badge bg-green-900">2025 - Deloitte Partnership</span>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>HIPAA-compliant medical records using <span class="text-cyan-400">Hyperledger Fabric</span></li>
+                        <li>Privacy-preserving federated learning improving diagnostics by <span class="text-cyan-400 font-semibold">32%</span></li>
+                        <li><span class="text-cyan-400 font-semibold">88% uptime</span> with full compliance</li>
+                        <li>Secure patient data management across healthcare networks</li>
                     </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">Hyperledger</span>
+                        <span class="badge">Federated Learning</span>
+                        <span class="badge">HIPAA</span>
+                        <span class="badge">Blockchain</span>
+                    </div>
                 </div>
 
                 <!-- Project 4 -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-2xl font-semibold mb-4 flex items-center orbitron">
-                        <i class="fas fa-clover mr-2"></i> Tarot Card Predictor (2023)
-                    </h3>
-                    <ul class="list-disc list-inside space-y-2">
-                        <li>Created an engaging online platform that offers personalized tarot readings, guiding users through life's journeys with voice interaction capabilities.</li>
-                        <li>Implemented voice recognition for users to ask questions and receive personalized readings, making the experience more immersive and accessible.</li>
-                        <li>Designed an intuitive interface where users can explore card meanings, receive insightful interpretations, and gain clarity on their past, present, and future.</li>
-                        <li>Integrated machine learning algorithms to analyze user input and tailor readings based on preferences and previous interactions.</li>
-                        <li class="text-sm text-gray-400">Tech Stack: Flask, Gemini, Tailwind CSS, Bootstrap, JavaScript, OpenCV, MongoDB, AWS, Web Speech API</li>
+                <div class="card neon-border">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-4 text-cyan-400">
+                            <i class="fas fa-unlock-alt"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold orbitron">CryptoCracker</h3>
+                            <span class="badge bg-green-900">2024</span>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>BERT classifier predicting encryption algorithms with <span class="text-cyan-400 font-semibold">95% accuracy</span></li>
+                        <li>Reduced prediction query time by <span class="text-cyan-400 font-semibold">70-80%</span></li>
+                        <li>Adaptive ML algorithms with fallback mechanisms</li>
+                        <li>Ethical cryptography analysis tool</li>
                     </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">BERT</span>
+                        <span class="badge">Cryptography</span>
+                        <span class="badge">Blockchain</span>
+                        <span class="badge">Security</span>
+                    </div>
+                </div>
+
+                <!-- Project 5 -->
+                <div class="card neon-border">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-4 text-cyan-400">
+                            <i class="fas fa-user-astronaut"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold orbitron">Character AI with Voice</h3>
+                            <span class="badge bg-green-900">2024</span>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>Flask app with Google's Generative AI for character interactions</li>
+                        <li>Voice recognition and synthesis for dynamic dialogues</li>
+                        <li>Context-aware conversation flows</li>
+                        <li>Feedback loop for continuous improvement</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">Flask</span>
+                        <span class="badge">Gemini</span>
+                        <span class="badge">NLP</span>
+                        <span class="badge">Voice AI</span>
+                    </div>
+                </div>
+
+                <!-- Project 6 -->
+                <div class="card neon-border">
+                    <div class="flex items-center mb-4">
+                        <div class="text-4xl mr-4 text-cyan-400">
+                            <i class="fas fa-hand-sparkles"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-2xl font-semibold orbitron">Tarot Card Predictor</h3>
+                            <span class="badge bg-green-900">2023</span>
+                        </div>
+                    </div>
+                    <ul class="list-disc list-inside space-y-2 mb-4">
+                        <li>Online platform for personalized tarot readings</li>
+                        <li>Voice interaction for immersive experience</li>
+                        <li>ML algorithms for tailored readings</li>
+                        <li>Intuitive interface with card interpretations</li>
+                    </ul>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="badge">Flask</span>
+                        <span class="badge">Gemini</span>
+                        <span class="badge">OpenCV</span>
+                        <span class="badge">MongoDB</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Publications Section -->
+        <section id="research" class="mb-20">
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Research & Publications</h2>
+            
+            <!-- Publications -->
+            <div class="mb-12">
+                <h3 class="text-2xl font-semibold mb-6 text-cyan-400 orbitron">
+                    <i class="fas fa-book-open mr-3"></i>Published Research
+                </h3>
+                <div class="space-y-6">
+                    <div class="card neon-border">
+                        <h4 class="text-xl font-semibold mb-2 orbitron">Beyond Redaction: Context-Aware PII Detection and In-situ Correction using Generative AI</h4>
+                        <p class="text-cyan-400 mb-2">Debasish Tripathy, with Dr. Gururaj & Dr. Shreyas</p>
+                        <span class="badge bg-yellow-900">Under Review - 2025</span>
+                        <p class="mt-3">Designed a PII detection system achieving <span class="text-cyan-400 font-semibold">99.2% accuracy</span> and developed novel automated data amendment mechanisms using Large Language Models, ViT, and SAM.</p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge">PII Detection</span>
+                            <span class="badge">LLM</span>
+                            <span class="badge">Vision Transformers</span>
+                            <span class="badge">Privacy AI</span>
+                        </div>
+                    </div>
+
+                    <div class="card neon-border">
+                        <h4 class="text-xl font-semibold mb-2 orbitron">A Comparative Analysis of Supervised Learning Evaluation Metrics</h4>
+                        <p class="text-cyan-400 mb-2">Debasish Tripathy, with Dr. Deepti Sisodia</p>
+                        <span class="badge bg-green-900">Published - NMI 2025</span>
+                        <p class="mt-3">Conducted large-scale analysis of 12 evaluation metrics across 8 ML domains, proposing a new framework for domain-aware model selection.</p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge">Machine Learning</span>
+                            <span class="badge">Evaluation Metrics</span>
+                            <span class="badge">Model Selection</span>
+                        </div>
+                    </div>
+
+                    <div class="card neon-border">
+                        <h4 class="text-xl font-semibold mb-2 orbitron">Vastu-Based Architectural Assessment Using Computer Vision</h4>
+                        <p class="text-cyan-400 mb-2">Debasish Tripathy, with Dr. Tusar</p>
+                        <span class="badge bg-green-900">Published - IJAC 2024</span>
+                        <p class="mt-3">Developed novel computer vision system analyzing architectural floor plans for Vastu Shastra compliance.</p>
+                        <div class="mt-3 flex flex-wrap gap-2">
+                            <span class="badge">Computer Vision</span>
+                            <span class="badge">Architecture</span>
+                            <span class="badge">Pattern Recognition</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patents -->
+            <div>
+                <h3 class="text-2xl font-semibold mb-6 text-cyan-400 orbitron">
+                    <i class="fas fa-lightbulb mr-3"></i>Patents & Intellectual Property
+                </h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div class="card neon-border">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-check-circle text-green-400 text-2xl mr-3"></i>
+                            <h4 class="text-lg font-semibold orbitron">Vastumeter</h4>
+                        </div>
+                        <span class="badge bg-green-900">Granted - No. 202541045118</span>
+                        <p class="mt-3">Comprehensive Vastu measurement and analysis device for architectural compliance assessment.</p>
+                    </div>
+
+                    <div class="card neon-border">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-check-circle text-green-400 text-2xl mr-3"></i>
+                            <h4 class="text-lg font-semibold orbitron">Fashion Assessment System</h4>
+                        </div>
+                        <span class="badge bg-green-900">Granted - No. 202441086519</span>
+                        <p class="mt-3">System for automated fashion assessment and recommendation using AI.</p>
+                    </div>
+
+                    <div class="card neon-border">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-check-circle text-green-400 text-2xl mr-3"></i>
+                            <h4 class="text-lg font-semibold orbitron">Smart Neck Accessory</h4>
+                        </div>
+                        <span class="badge bg-green-900">Granted - No. 202541087250</span>
+                        <p class="mt-3">Wearable device with integrated safety and alert features for personal protection.</p>
+                    </div>
+
+                    <div class="card neon-border">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-clock text-yellow-400 text-2xl mr-3"></i>
+                            <h4 class="text-lg font-semibold orbitron">Paranormal Detection Mechanism</h4>
+                        </div>
+                        <span class="badge bg-yellow-900">Pending</span>
+                        <p class="mt-3">Novel sensor fusion system for detecting anomalous environmental phenomena.</p>
+                    </div>
+
+                    <div class="card neon-border">
+                        <div class="flex items-center mb-3">
+                            <i class="fas fa-check-circle text-green-400 text-2xl mr-3"></i>
+                            <h4 class="text-lg font-semibold orbitron">Cipher Decryption Algorithm</h4>
+                        </div>
+                        <span class="badge bg-green-900">Copyright - No. 37205/2024-CO/L</span>
+                        <p class="mt-3">Novel algorithm for rapid decryption of symmetric key-encrypted ciphers for forensic investigations.</p>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Education Section -->
         <section id="education" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">Education</h2>
-            <div class="card card-hover neon-border">
-                <h3 class="text-2xl font-semibold mb-2 orbitron">B.Tech in Computer Science and Engineering</h3>
-                <p class="text-cyan-400 mb-4">Manipal Institute of Technology | 2022 - 2026</p>
-                <p class="mb-2">CGPA: 7.57</p>
-                <p class="text-sm">Relevant Coursework: Advanced AI Algorithms, Quantum Computing, Cybersecurity in AI Systems, Neural Network Architectures, Ethical AI and Machine Learning, Blockchain Technology, IoT and Edge Computing</p>
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Education</h2>
+            <div class="card neon-border">
+                <div class="flex flex-wrap justify-between items-start mb-4">
+                    <div>
+                        <h3 class="text-3xl font-semibold mb-2 orbitron gradient-text-alt">Bachelor of Technology</h3>
+                        <h4 class="text-xl text-cyan-400 mb-2">Computer Science & Engineering (Cybersecurity)</h4>
+                        <p class="text-lg text-purple-300 mb-2">Manipal Institute of Technology, Bengaluru</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="badge bg-cyan-900 text-xl">Aug 2022 - May 2026</span>
+                        <div class="mt-3">
+                            <div class="text-3xl font-bold gradient-text orbitron">8.11/10.0</div>
+                            <p class="text-sm text-gray-400">CGPA</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-6 mt-6">
+                    <div>
+                        <h5 class="text-lg font-semibold text-cyan-400 mb-3 orbitron">
+                            <i class="fas fa-book mr-2"></i>Key Coursework
+                        </h5>
+                        <ul class="space-y-2">
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Advanced Algorithms</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Deep Learning Systems</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Computer Vision</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Natural Language Processing</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Reinforcement Learning</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Distributed Systems</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Cloud Computing Architecture</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Quantum Computing Fundamentals</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>System Design</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Information Security & Cryptography</li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h5 class="text-lg font-semibold text-cyan-400 mb-3 orbitron">
+                            <i class="fas fa-flask mr-2"></i>Research Focus
+                        </h5>
+                        <ul class="space-y-2">
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Computer Vision Applications</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Large Language Model (LLM) Fine-tuning</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Federated Learning Privacy</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>AI Security & Robustness</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Privacy-Preserving Machine Learning</li>
+                            <li><i class="fas fa-check text-cyan-400 mr-2"></i>Adversarial Machine Learning</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </section>
 
         <!-- Achievements Section -->
         <section id="achievements" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">Achievements & Activities</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Achievements & Recognition</h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Competitions -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-trophy mr-2"></i> Competitions
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-6 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-trophy mr-3 text-yellow-400 icon-spin"></i> Hackathons & Competitions
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>Winner of AutoDesk EduHack</li>
-                        <li>Winner of Microsoft AI Odyssey India</li>
-                        <li>4th position in Walmart Global ML Hackathon</li>
-                        <li>Finalist in the International Quantum AI Challenge</li>
-                    </ul>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-medal text-yellow-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">2nd Prize - PwC Firecrest Hackathon</h4>
+                                <p class="text-sm text-gray-400">Advanced AI solution for enterprise challenges</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-medal text-yellow-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">1st Prize - Coder Army System Design Hackathon</h4>
+                                <p class="text-sm text-gray-400">Scalable system architecture design</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-medal text-yellow-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">1st Prize - Schneider Electric Cybersecurity CTF</h4>
+                                <p class="text-sm text-gray-400">Capture the Flag cybersecurity competition</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-trophy text-cyan-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Winner - Autodesk EduHack</h4>
+                                <p class="text-sm text-gray-400">Educational technology innovation</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-trophy text-cyan-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Winner - Microsoft AI Odyssey India</h4>
+                                <p class="text-sm text-gray-400">AI innovation challenge</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-medal text-orange-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">4th Position - Walmart Global ML Hackathon</h4>
+                                <p class="text-sm text-gray-400">Machine learning solutions for retail</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+
                 <!-- Leadership -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-user-cog mr-2"></i> Leadership
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-6 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-users mr-3 icon-spin"></i> Leadership & Community
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>President for Sustainable Development Club MITBLR</li>
-                        <li>Vice Chair of PWL Research Group MITBLR</li>
-<!--                         <li>Tech Lead for AI Security Task Force at Techfest MITBLR</li>
-                        <li>Discipline Lead for AI Ethics Panel at Open House MAHE</li> -->
-                    </ul>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-user-tie text-purple-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">President</h4>
+                                <p class="text-cyan-400">Sustainable Development Club, MITBLR</p>
+                                <p class="text-sm text-gray-400 mt-1">Leading initiatives for sustainable technology and environmental awareness</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-user-graduate text-purple-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Vice Chair</h4>
+                                <p class="text-cyan-400">Papers We Love (PWL) Research Group, MITBLR</p>
+                                <p class="text-sm text-gray-400 mt-1">Organizing research paper discussions and academic collaborations</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-handshake text-green-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Open Source Contributor</h4>
+                                <p class="text-sm text-gray-400 mt-1">Active contributor to AI/ML and security projects</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-chalkboard-teacher text-green-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Technical Mentor</h4>
+                                <p class="text-sm text-gray-400 mt-1">Mentoring students in AI/ML and cybersecurity domains</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Publications -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-book-open mr-2"></i> Publications
+
+                <!-- Security Research -->
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-6 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-bug mr-3 icon-spin"></i> Security Research
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>Harnessing Machine Learning for the Detection of Paranormal Phenomena: Methodologies and Insights</li>
-                        <li>Energy-Efficient ML in GIS Satellite Imaging Systems</li>
-                        <li>Comparative Analysis of Different Models for Detecting Harmful Brain Activity</li>
-                    </ul>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fab fa-google text-red-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">Google Security Researcher</h4>
+                                <p class="text-sm text-gray-400">Discovered critical vulnerabilities in Imagen 3</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fab fa-github text-white text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">GitHub Vulnerability Reporter</h4>
+                                <p class="text-sm text-gray-400">Active security research and responsible disclosure</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fab fa-linkedin text-blue-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">LinkedIn Security Research</h4>
+                                <p class="text-sm text-gray-400">Platform security analysis and bug bounty</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!-- Patents -->
-                <div class="card card-hover neon-border">
-                    <h3 class="text-xl font-semibold mb-4 text-cyan-400 flex items-center orbitron">
-                        <i class="fas fa-lightbulb mr-2"></i> Patents
+
+                <!-- Certifications & Training -->
+                <div class="card neon-border">
+                    <h3 class="text-2xl font-semibold mb-6 text-cyan-400 flex items-center orbitron">
+                        <i class="fas fa-certificate mr-3 icon-spin"></i> Impact & Recognition
                     </h3>
-                    <ul class="list-disc list-inside">
-                        <li>AI-Powered Fashion Style Transfer System (Silku)</li>
-                        <li>Multimodal Sentiment Analysis Using Biometric Parameters (DESEN)</li>
-                        <li>Quantum-Enhanced Paranormal Activity Detection System (QPARDEC)</li>
-                        <li>Advanced Cipher Decryption tool (CipherSlayer)</li>
-                    </ul>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <i class="fas fa-award text-yellow-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">$1,000 Cloud Credits</h4>
+                                <p class="text-sm text-gray-400">Secured for AI Food Pantry platform development</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-users text-cyan-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">1,200+ Platform Users</h4>
+                                <p class="text-sm text-gray-400">Active users on AI Food Pantry platform</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-chart-line text-green-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">74% Efficiency Improvement</h4>
+                                <p class="text-sm text-gray-400">Security compliance optimization at Philips</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <i class="fas fa-shield-alt text-purple-400 text-2xl mr-3 mt-1"></i>
+                            <div>
+                                <h4 class="font-semibold text-lg">98.7% Threat Detection</h4>
+                                <p class="text-sm text-gray-400">Zero-day vulnerability identification rate</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Contact Section -->
         <section id="contact" class="mb-20">
-            <h2 class="section-heading gradient-text orbitron">Get in Touch</h2>
-            <div class="card card-hover neon-border">
-                <p class="text-lg mb-6">Feel free to reach out to me through any of the platforms below:</p>
-                <div class="flex flex-wrap gap-4">
-                    <a href="mailto:debasishtripathy2021@gmail.com" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-                        <i class="fas fa-envelope mr-2"></i> Email
+            <h2 class="section-heading gradient-text orbitron" data-animate="fade-up">Let's Connect</h2>
+            <div class="card neon-border">
+                <div class="text-center mb-8">
+                    <p class="text-xl mb-4">Interested in collaboration, research opportunities, or just want to chat about AI and security?</p>
+                    <p class="text-lg text-cyan-400">Let's build something amazing together!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                    <a href="mailto:debasishtripathy2021@gmail.com" class="card neon-border text-center hover:scale-105 transition-transform">
+                        <i class="fas fa-envelope text-4xl text-cyan-400 mb-3"></i>
+                        <h4 class="font-semibold orbitron">Email</h4>
+                        <p class="text-sm text-gray-400">Direct Contact</p>
                     </a>
-                    <a href="https://linkedin.com/in/debasish-tripathy-48441b1b5" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-                        <i class="fab fa-linkedin mr-2"></i> LinkedIn
+
+                    <a href="https://linkedin.com/in/debasish-tripathy-48441b1b5" target="_blank" class="card neon-border text-center hover:scale-105 transition-transform">
+                        <i class="fab fa-linkedin text-4xl text-blue-400 mb-3"></i>
+                        <h4 class="font-semibold orbitron">LinkedIn</h4>
+                        <p class="text-sm text-gray-400">Professional Network</p>
                     </a>
-                    <a href="https://github.com/DebasishTripathy13" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-                        <i class="fab fa-github mr-2"></i> GitHub
+
+                    <a href="https://github.com/DebasishTripathy13" target="_blank" class="card neon-border text-center hover:scale-105 transition-transform">
+                        <i class="fab fa-github text-4xl text-white mb-3"></i>
+                        <h4 class="font-semibold orbitron">GitHub</h4>
+                        <p class="text-sm text-gray-400">Main Profile</p>
                     </a>
-                    <a href="https://github.com/Debasish7ripathy" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-                        <i class="fab fa-github mr-2"></i> GitHub2
+
+                    <a href="https://github.com/Debasish7ripathy" target="_blank" class="card neon-border text-center hover:scale-105 transition-transform">
+                        <i class="fab fa-github text-4xl text-purple-400 mb-3"></i>
+                        <h4 class="font-semibold orbitron">GitHub Alt</h4>
+                        <p class="text-sm text-gray-400">Secondary Profile</p>
                     </a>
-                    <a href="https://debasish7ripathy.github.io/Portfolio/" target="_blank" class="text-cyan-400 hover:text-cyan-300 flex items-center">
-                        <i class="fas fa-globe mr-2"></i> Portfolio
+                </div>
+
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://Debasish7ripathy.github.io/Portfolio/" target="_blank" class="btn-primary orbitron">
+                        <i class="fas fa-globe mr-2"></i>Visit Portfolio
                     </a>
-                    <a href="https://drive.google.com/file/d/1B8h-VRDY7DcgVf6iQ0_m42-pphHgKIE7/view?usp=sharing" download class="text-cyan-400 hover:text-cyan-300 flex items-center">
-                        <i class="fas fa-file-download mr-2"></i> Download Resume
+                    <a href="https://drive.google.com/file/d/1B8h-VRDY7DcgVf6iQ0_m42-pphHgKIE7/view?usp=sharing" target="_blank" class="btn-primary orbitron">
+                        <i class="fas fa-file-download mr-2"></i>Download Resume
                     </a>
+                    <a href="tel:+918897008513" class="btn-primary orbitron">
+                        <i class="fas fa-phone mr-2"></i>+91 8897008513
+                    </a>
+                </div>
+
+                <div class="mt-8 text-center">
+                    <p class="text-gray-400 mb-2">Based in Bengaluru, India 🇮🇳</p>
+                    <p class="text-sm text-gray-500">Available for full-time opportunities and collaborations</p>
                 </div>
             </div>
         </section>
     </main>
 
     <!-- Footer -->
-    <footer class="bg-gray-900 text-center py-8">
-        <p class="text-cyan-400">&copy; 2024 Debasish Tripathy. Pioneering the Future of AI and Cybersecurity.</p>
+    <footer class="relative bg-slate-950/80 backdrop-blur-xl py-10 border-t border-cyan-500/25">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-3 gap-8 mb-6">
+                <div>
+                    <h3 class="text-2xl font-bold gradient-text orbitron mb-3">Debasish Tripathy</h3>
+                    <p class="text-gray-400">AI/ML Engineer & Security Researcher passionate about building secure, intelligent systems.</p>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-cyan-400 mb-3 orbitron">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="#about" class="text-gray-400 hover:text-cyan-400 transition">About</a></li>
+                        <li><a href="#experience" class="text-gray-400 hover:text-cyan-400 transition">Experience</a></li>
+                        <li><a href="#projects" class="text-gray-400 hover:text-cyan-400 transition">Projects</a></li>
+                        <li><a href="#research" class="text-gray-400 hover:text-cyan-400 transition">Research</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-lg font-semibold text-cyan-400 mb-3 orbitron">Connect</h4>
+                    <div class="flex space-x-4">
+                        <a href="https://linkedin.com/in/debasish-tripathy-48441b1b5" target="_blank" class="text-2xl text-gray-400 hover:text-cyan-400 transition">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://github.com/DebasishTripathy13" target="_blank" class="text-2xl text-gray-400 hover:text-cyan-400 transition">
+                            <i class="fab fa-github"></i>
+                        </a>
+                        <a href="mailto:debasishtripathy2021@gmail.com" class="text-2xl text-gray-400 hover:text-cyan-400 transition">
+                            <i class="fas fa-envelope"></i>
+                        </a>
+                        <a href="https://Debasish7ripathy.github.io/Portfolio/" target="_blank" class="text-2xl text-gray-400 hover:text-cyan-400 transition">
+                            <i class="fas fa-globe"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="text-center pt-6 border-t border-gray-800">
+                <p class="text-cyan-400 orbitron">&copy; 2025 Debasish Tripathy. Pioneering the Future of AI and Cybersecurity.</p>
+                <p class="text-sm text-gray-500 mt-2">Last Updated: October 2025</p>
+            </div>
+        </div>
     </footer>
 
     <!-- Scripts -->
     <script>
-        // AI Matrix effect on the background
+        // ===================================
+        // LOADING SCREEN
+        // ===================================
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            setTimeout(() => {
+                loader.classList.add('hidden');
+            }, 1500);
+        });
+
+        // ===================================
+        // CUSTOM CURSOR - OPTIMIZED
+        // ===================================
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+
+        if (cursor && cursorFollower) {
+            let mouseX = 0, mouseY = 0;
+            let followerX = 0, followerY = 0;
+            
+            // Use RAF for smooth cursor animation
+            document.addEventListener('mousemove', (e) => {
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+            });
+
+            function animateCursor() {
+                cursor.style.transform = `translate(${mouseX}px, ${mouseY}px)`;
+                
+                // Smooth follower with easing
+                followerX += (mouseX - followerX) * 0.1;
+                followerY += (mouseY - followerY) * 0.1;
+                cursorFollower.style.transform = `translate(${followerX}px, ${followerY}px)`;
+                
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+
+            // Cursor effect on clickable elements
+            const clickables = document.querySelectorAll('a, button, .card, .badge, .btn-primary');
+            clickables.forEach(el => {
+                el.addEventListener('mouseenter', () => {
+                    cursor.classList.add('active');
+                    cursorFollower.classList.add('active');
+                });
+                el.addEventListener('mouseleave', () => {
+                    cursor.classList.remove('active');
+                    cursorFollower.classList.remove('active');
+                });
+            });
+        }
+
+        // ===================================
+        // PARTICLES.JS CONFIGURATION - OPTIMIZED
+        // ===================================
+        // Reduce particles on mobile for better performance
+        const isMobile = window.innerWidth < 768;
+        const particleCount = isMobile ? 30 : 50;
+        
+        particlesJS('particles-js', {
+            particles: {
+                number: {
+                    value: particleCount,
+                    density: {
+                        enable: true,
+                        value_area: 1000
+                    }
+                },
+                color: {
+                    value: ['#38bdf8', '#a855f7', '#22d3ee']
+                },
+                shape: {
+                    type: 'circle',
+                    stroke: {
+                        width: 0,
+                        color: '#000000'
+                    }
+                },
+                opacity: {
+                    value: 0.4,
+                    random: true,
+                    anim: {
+                        enable: false
+                    }
+                },
+                size: {
+                    value: 3,
+                    random: true,
+                    anim: {
+                        enable: false
+                    }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 150,
+                    color: '#38bdf8',
+                    opacity: 0.18,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.5,
+                    direction: 'none',
+                    random: false,
+                    straight: false,
+                    out_mode: 'out',
+                    bounce: false,
+                    attract: {
+                        enable: false
+                    }
+                }
+            },
+            interactivity: {
+                detect_on: 'canvas',
+                events: {
+                    onhover: {
+                        enable: true,
+                        mode: 'grab'
+                    },
+                    onclick: {
+                        enable: true,
+                        mode: 'push'
+                    },
+                    resize: true
+                },
+                modes: {
+                    grab: {
+                        distance: 140,
+                        line_linked: {
+                            opacity: 0.5
+                        }
+                    },
+                    push: {
+                        particles_nb: 4
+                    }
+                }
+            },
+            retina_detect: true
+        });
+
+        // ===================================
+        // MATRIX BACKGROUND EFFECT - OPTIMIZED
+        // ===================================
         const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: false });
         let width = canvas.width = window.innerWidth;
         let height = canvas.height = window.innerHeight;
 
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ123456789@#$%^&*()*&^%';
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
         const fontSize = 16;
         const columns = Math.floor(width / fontSize);
         const drops = new Array(columns).fill(1);
 
         function drawMatrix() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillStyle = 'rgba(2, 6, 23, 0.12)';
             ctx.fillRect(0, 0, width, height);
-            ctx.fillStyle = '#0ff';
+            
+            ctx.fillStyle = 'rgba(56, 189, 248, 0.85)';
             ctx.font = fontSize + 'px monospace';
 
             for (let i = 0; i < drops.length; i++) {
                 const text = letters.charAt(Math.floor(Math.random() * letters.length));
                 ctx.fillText(text, i * fontSize, drops[i] * fontSize);
 
-                if (drops[i] * fontSize > height && Math.random() > 0.975) {
+                if (drops[i] * fontSize > height && Math.random() > 0.98) {
                     drops[i] = 0;
                 }
                 drops[i]++;
             }
         }
-        setInterval(drawMatrix, 35);
+        
+        // Use RAF instead of setInterval for better performance
+        function animateMatrix() {
+            drawMatrix();
+            setTimeout(() => requestAnimationFrame(animateMatrix), 50);
+        }
+        animateMatrix();
 
-        // Handle window resize
+        // Debounced resize
+        let resizeTimeout;
         window.addEventListener('resize', () => {
-            width = canvas.width = window.innerWidth;
-            height = canvas.height = window.innerHeight;
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }, 250);
         });
 
-        // GSAP Animations
+        // ===================================
+        // GSAP ANIMATIONS
+        // ===================================
         gsap.registerPlugin(ScrollTrigger);
 
-        gsap.utils.toArray('section').forEach(section => {
-            gsap.from(section, {
+        const animationPresets = {
+            'fade-up': { y: 60 },
+            'fade-down': { y: -60 },
+            'fade-left': { x: 60 },
+            'fade-right': { x: -60 },
+            'zoom-in': { scale: 0.9 },
+            'rotate-in': { rotationX: -30 }
+        };
+
+        gsap.utils.toArray('[data-animate]').forEach((el) => {
+            const animation = el.dataset.animate || 'fade-up';
+            const delay = parseFloat(el.dataset.delay || '0');
+            const once = el.dataset.once !== 'false';
+            const fromVars = {
                 opacity: 0,
-                y: 50,
-                duration: 1,
+                duration: 1.1,
+                ease: 'power3.out',
+                delay,
+                ...(animationPresets[animation] || {})
+            };
+
+            if (el.closest('header')) {
+                gsap.from(el, { ...fromVars, delay: delay + 0.2 });
+            } else {
+                gsap.from(el, {
+                    ...fromVars,
+                    scrollTrigger: {
+                        trigger: el,
+                        start: 'top 82%',
+                        toggleActions: 'play none none reverse',
+                        once
+                    }
+                });
+            }
+        });
+
+        // Fallback animations for legacy elements
+        gsap.utils.toArray('.card').forEach((card) => {
+            if (card.hasAttribute('data-animate')) return;
+            gsap.from(card, {
+                opacity: 0,
+                y: 35,
+                duration: 0.7,
+                ease: 'power2.out',
                 scrollTrigger: {
-                    trigger: section,
-                    start: 'top 80%',
-                    end: 'bottom 20%',
-                    toggleActions: 'play none none reverse'
+                    trigger: card,
+                    start: 'top 90%',
+                    toggleActions: 'play none none none',
+                    once: true
                 }
             });
         });
 
-        // Typewriter effect for the subtitle
-        const subtitle = document.querySelector('header p');
-        const text = subtitle.textContent;
-        subtitle.textContent = '';
-        let i = 0;
-        function typeWriter() {
-            if (i < text.length) {
-                subtitle.textContent += text.charAt(i);
-                i++;
-                setTimeout(typeWriter, 50);
-            }
+        gsap.utils.toArray('.badge').forEach((badge) => {
+            if (badge.hasAttribute('data-animate')) return;
+            gsap.from(badge, {
+                opacity: 0,
+                y: 10,
+                duration: 0.45,
+                ease: 'power1.out',
+                scrollTrigger: {
+                    trigger: badge,
+                    start: 'top 92%',
+                    toggleActions: 'play none none none',
+                    once: true
+                }
+            });
+        });
+
+        // ===================================
+        // NAVIGATION - OPTIMIZED
+        // ===================================
+        const navbar = document.getElementById('navbar');
+        let scrollTimeout;
+        let lastScrollY = 0;
+    const navLinks = Array.from(document.querySelectorAll('nav a[href^="#"]'));
+        
+        window.addEventListener('scroll', () => {
+            clearTimeout(scrollTimeout);
+            scrollTimeout = setTimeout(() => {
+                const currentScrollY = window.scrollY;
+                if (Math.abs(currentScrollY - lastScrollY) > 10) {
+                    if (currentScrollY > 100) {
+                        navbar.classList.add('scrolled');
+                    } else {
+                        navbar.classList.remove('scrolled');
+                    }
+                    lastScrollY = currentScrollY;
+                }
+            }, 10);
+        }, { passive: true });
+
+        // Smooth scroll for navigation links with offset for fixed navbar
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const target = document.querySelector(targetId);
+                if (target) {
+                    // Get navbar height and add extra spacing
+                    const navbarHeight = document.getElementById('navbar').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight - 40;
+                    
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    document.getElementById('mobileMenu').classList.remove('active');
+                    document.getElementById('mobileMenuOverlay').classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+
+                if (navLinks.includes(this)) {
+                    navLinks.forEach(link => link.classList.toggle('active', link === this));
+                }
+            });
+        });
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+        // Open mobile menu
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.add('active');
+            mobileMenuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when menu is open
+        });
+
+        // Close mobile menu function
+        const closeMobileMenuFunc = () => {
+            mobileMenu.classList.remove('active');
+            mobileMenuOverlay.classList.remove('active');
+            document.body.style.overflow = ''; // Restore scrolling
+        };
+
+        // Close button
+        closeMobileMenu.addEventListener('click', closeMobileMenuFunc);
+
+        // Close when clicking overlay
+        mobileMenuOverlay.addEventListener('click', closeMobileMenuFunc);
+
+        // Close menu when clicking on a link
+        document.querySelectorAll('.mobile-menu-link').forEach(link => {
+            link.addEventListener('click', closeMobileMenuFunc);
+        });
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    navLinks.forEach(link => {
+                        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
+                    });
+                }
+            });
+        }, { rootMargin: '-45% 0px -45% 0px' });
+
+        document.querySelectorAll('main section[id]').forEach(section => sectionObserver.observe(section));
+
+        // ===================================
+        // COUNTER ANIMATION
+        // ===================================
+        const counters = document.querySelectorAll('.counter');
+        const animateCounter = (counter) => {
+            const target = parseFloat(counter.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    counter.textContent = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    counter.textContent = target % 1 === 0 ? target : target.toFixed(2);
+                }
+            };
+            updateCounter();
+        };
+
+        // Trigger counter animation when in view
+        const counterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounter(entry.target);
+                    counterObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => counterObserver.observe(counter));
+
+        // ===================================
+        // SKILL BARS ANIMATION
+        // ===================================
+        const skillBars = document.querySelectorAll('.skill-progress');
+        const skillObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progress = entry.target.getAttribute('data-progress');
+                    entry.target.style.width = progress + '%';
+                    skillObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        skillBars.forEach(bar => {
+            bar.style.width = '0%';
+            skillObserver.observe(bar);
+        });
+
+        // ===================================
+        // TYPEWRITER EFFECT
+        // ===================================
+        const subtitleElement = document.getElementById('hero-subtitle');
+        if (subtitleElement) {
+            const subtitleText = subtitleElement.textContent.trim();
+            subtitleElement.textContent = '';
+            let charIndex = 0;
+
+            const typeWriter = () => {
+                if (charIndex < subtitleText.length) {
+                    subtitleElement.textContent += subtitleText.charAt(charIndex);
+                    charIndex++;
+                    setTimeout(typeWriter, 45);
+                }
+            };
+
+            setTimeout(typeWriter, 320);
         }
-        typeWriter();
+
+        // ===================================
+        // PARALLAX EFFECT ON HEADER
+        // ===================================
+        window.addEventListener('scroll', () => {
+            const scrolled = window.pageYOffset;
+            const header = document.querySelector('header');
+            if (header) {
+                header.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+
+        // ===================================
+        // CONSOLE MESSAGE
+        // ===================================
+        console.log('%c👋 Hello, Fellow Developer!', 'color: #00ffff; font-size: 20px; font-weight: bold;');
+        console.log('%cInterested in the code? Check out my GitHub!', 'color: #ff00ff; font-size: 14px;');
+        console.log('%chttps://github.com/DebasishTripathy13', 'color: #3b00ff; font-size: 14px;');
     </script>
 </body>
-</html>
+</html>                        
